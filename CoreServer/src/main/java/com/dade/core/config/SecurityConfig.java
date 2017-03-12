@@ -24,8 +24,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
         auth.userDetailsService(new PurchaserSecurityServices(purchaserRepository));
-//        auth.userDetailsService(new HunterUserSecurityServices(repository));
-
     }
 
     @Override
@@ -41,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/test/**").permitAll()
+                .antMatchers("/api/general/**").permitAll()
                 .anyRequest().authenticated();
 
         http.csrf().disable();

@@ -3,6 +3,9 @@ package com.dade.core.user.purchaser;
 import com.dade.core.basic.BasicModelObject;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * 用户模型
  * 买房 卖饭 租房用户统一
@@ -12,15 +15,24 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Purchaser extends BasicModelObject {
 
     private String id;
-    private String name;
 
-    private Integer age;
+    private String name;                                // 姓名
+    private Integer age;                                // 年龄
+    private String phoneNumber;                         // 手机号
+    private String password;                            // 密码
+    private String role;                                //  角色 -- 权限控制
 
-    private String phoneNumber;
-    private String password;
-    private String role;
+    private String imageHeaderUrl;                      // 头像
 
-    private String imageHeaderUrl;
+    // person center
+    private List<FocusHouse> focusHouseList;            // 关注列表
+    private List<HouseRecord> houseRecordList;          // 看房列表
+    private List<HouseSchedule> houseScheduleList;      // 看房行程
+
+    private Date createDate;
+    private Date ModifyDate;
+
+    private Boolean deleted;
 
     public static final String FIELD_PHONE_NUMBER = "phoneNumber";
 
@@ -83,6 +95,54 @@ public class Purchaser extends BasicModelObject {
     }
 
 
+    public List<FocusHouse> getFocusHouseList() {
+        return focusHouseList;
+    }
+
+    public void setFocusHouseList(List<FocusHouse> focusHouseList) {
+        this.focusHouseList = focusHouseList;
+    }
+
+    public List<HouseRecord> getHouseRecordList() {
+        return houseRecordList;
+    }
+
+    public void setHouseRecordList(List<HouseRecord> houseRecordList) {
+        this.houseRecordList = houseRecordList;
+    }
+
+    public List<HouseSchedule> getHouseScheduleList() {
+        return houseScheduleList;
+    }
+
+    public void setHouseScheduleList(List<HouseSchedule> houseScheduleList) {
+        this.houseScheduleList = houseScheduleList;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getModifyDate() {
+        return ModifyDate;
+    }
+
+    public void setModifyDate(Date modifyDate) {
+        ModifyDate = modifyDate;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
     @Override
     public String toString() {
         return "Purchaser{" +
@@ -93,6 +153,9 @@ public class Purchaser extends BasicModelObject {
                 ", password='" + password + '\'' +
                 ", role='" + role + '\'' +
                 ", imageHeaderUrl='" + imageHeaderUrl + '\'' +
+                ", focusHouseList=" + focusHouseList +
+                ", houseRecordList=" + houseRecordList +
+                ", houseScheduleList=" + houseScheduleList +
                 '}';
     }
 }
