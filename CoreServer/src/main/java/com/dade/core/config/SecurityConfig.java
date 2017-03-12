@@ -1,7 +1,7 @@
 package com.dade.core.config;
 
-import com.dade.core.mongo.HunterUserRepository;
-import com.dade.core.mongo.HunterUserSecurityServices;
+import com.dade.core.mongo.PurchaserRepository;
+import com.dade.core.mongo.PurchaserSecurityServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -19,11 +19,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    HunterUserRepository repository;
+    PurchaserRepository purchaserRepository;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-        auth.userDetailsService(new HunterUserSecurityServices(repository));
+        auth.userDetailsService(new PurchaserSecurityServices(purchaserRepository));
+//        auth.userDetailsService(new HunterUserSecurityServices(repository));
 
     }
 
@@ -40,9 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/test/**").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().authenticated();
 
-//        http.csrf().disable();
+        http.csrf().disable();
 //        http.cors().disable();
         ;
     }
