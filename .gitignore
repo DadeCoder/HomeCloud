@@ -1,0 +1,12 @@
+*.log
+.idea/*
+*.iml
+*.ipr
+*.iws
+data/*
+logs/*
+*/.idea/*
+tmp_cv/*
+*.log
+*/target/
+MessageServer/*
