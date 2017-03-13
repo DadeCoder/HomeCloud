@@ -7,7 +7,7 @@ public class RegisterDto {
 
     private String username;
     private String password;
-    private String phone;
+    private String phoneNumber;
 
     public String getUsername() {
         return username;
@@ -25,11 +25,20 @@ public class RegisterDto {
         this.password = password;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "RegisterDto{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
     }
 }

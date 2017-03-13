@@ -25,6 +25,7 @@ public class TestController {
         return dto;
     }
 
+    // TODO @rebot seems form post problems
     @RequestMapping(value = "/regi", method = RequestMethod.POST)
     RegisterDto regi(@RequestBody RegisterDto dto){
         LogUtil.info(dto.toString());
