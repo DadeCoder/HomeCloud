@@ -17,8 +17,8 @@ public class RegisterDao extends BasicMongoDao<Purchaser> {
     }
 
     public Purchaser findByName(String name){
-        Criteria criteria = Criteria.where(Purchaser.FIELD_NAME).is(name);
-//                .and(Purchaser.FIELD_DELETED).ne(true);
+        Criteria criteria = Criteria.where(Purchaser.FIELD_NAME).is(name)
+                .and(Purchaser.FIELD_DELETED).ne(true);
         return mongoOperations.findOne(Query.query(criteria), Purchaser.class);
     }
 
