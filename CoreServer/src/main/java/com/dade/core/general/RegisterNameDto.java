@@ -1,4 +1,4 @@
-package com.dade.core.test;
+package com.dade.core.general;
 
 /**
  * Created by Dade on 2017/3/13.

@@ -35,6 +35,8 @@ public class Purchaser extends BasicModelObject {
     private Boolean deleted;
 
     public static final String FIELD_PHONE_NUMBER = "phoneNumber";
+    public static final String FIELD_NAME = "name";
+
 
 
     public void setId(String id) {

@@ -1,20 +1,20 @@
 package com.dade.core.general;
 
 /**
- * Created by Dade on 2017/3/12.
+ * Created by Dade on 2017/3/13.
  */
 public class RegisterDto {
 
-    private String name;                                // 姓名
-    private String password;                            // 密码
-    private String phoneNumber;                         // 手机号
+    private String username;
+    private String password;
+    private String phoneNumber;
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -31,5 +31,14 @@ public class RegisterDto {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "RegisterDto{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
     }
 }
