@@ -13,6 +13,7 @@ import java.security.Principal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -34,6 +35,25 @@ public class PurchaserService {
         Purchaser purchaser = purchaserDao.getByPhoneNumber(phone);
         String info = purchaser.getImageHeaderUrl();
         return info;
+    }
+
+    public Purchaser getByPhone(String phone){
+        Purchaser purchaser = purchaserDao.getByPhoneNumber(phone);
+        return purchaser;
+    }
+
+    public void updateHouseCreate(String phone, String houseId){
+        Purchaser purchaser = getByPhone(phone);
+
+        List<PurchaserHouse> rentOutHouseList = purchaser.getRentOutHouseList();
+        PurchaserHouse purchaserHouse = new PurchaserHouse();
+        purchaserHouse.setHouseId(houseId);
+        purchaserHouse.setTime(new Date());
+        rentOutHouseList.add(purchaserHouse);
+
+        purchaser.setRentOutHouseList(rentOutHouseList);
+
+        purchaserDao.atomicUpdate(purchaser);
     }
 
 

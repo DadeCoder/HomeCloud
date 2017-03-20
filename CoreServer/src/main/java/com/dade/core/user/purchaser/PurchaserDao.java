@@ -40,6 +40,13 @@ public class PurchaserDao extends BasicMongoDao<Purchaser> {
         return mongoOperations.findOne(Query.query(criteria), Purchaser.class);
     }
 
+    public void atomicUpdate(Purchaser purchaser){
+        Date date = new Date();
+        purchaser.setModifyDate(date);
+
+        mongoOperations.save(purchaser);
+    }
+
     public Purchaser atomicCreate(Purchaser purchaser){
         Date date = new Date();
         purchaser.setCreateDate(date);

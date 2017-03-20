@@ -3,6 +3,7 @@ package com.dade.core.user.purchaser;
 import com.dade.core.basic.BasicModelObject;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -154,6 +155,10 @@ public class Purchaser extends BasicModelObject {
     }
 
     public List<PurchaserHouse> getRentHouseList() {
+
+        if ( rentHouseList == null )
+            rentHouseList = new ArrayList<PurchaserHouse>();
+
         return rentHouseList;
     }
 
@@ -162,6 +167,10 @@ public class Purchaser extends BasicModelObject {
     }
 
     public List<PurchaserHouse> getRentOutHouseList() {
+
+        if ( rentOutHouseList == null )
+            rentOutHouseList = new ArrayList<PurchaserHouse>();
+
         return rentOutHouseList;
     }
 

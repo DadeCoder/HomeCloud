@@ -1,9 +1,11 @@
 package com.dade.core.house.dto;
 
+import java.util.Date;
+
 /**
  * Created by Dade on 2017/3/20.
  */
-public class HouseRentOutResDto {
+public class HouseDto {
 
     private Integer area;                            // 面积
     private Integer floor;                           // 楼层
@@ -14,16 +16,24 @@ public class HouseRentOutResDto {
 
     private Integer rentPrice;                      // 出售价格
 
-    private String info;
+    private String date;                            // 上线时间（需要手动复制）
+    private String type;                            // 出租还是出售（需要手动复制）
 
-    public String getInfo() {
-        return info;
+    public String getDate() {
+        return date;
     }
 
-    public void setInfo(String info) {
-        this.info = info;
+    public void setDate(String date) {
+        this.date = date;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public Integer getArea() {
         return area;
@@ -83,7 +93,7 @@ public class HouseRentOutResDto {
 
     @Override
     public String toString() {
-        return "HouseRentOutResDto{" +
+        return "HouseDto{" +
                 "area=" + area +
                 ", floor=" + floor +
                 ", address='" + address + '\'' +
@@ -91,7 +101,6 @@ public class HouseRentOutResDto {
                 ", community='" + community + '\'' +
                 ", district='" + district + '\'' +
                 ", rentPrice=" + rentPrice +
-                ", info='" + info + '\'' +
                 '}';
     }
 }
