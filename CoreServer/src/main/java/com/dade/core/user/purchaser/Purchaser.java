@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * 用户模型
- * 买房 卖饭 租房用户统一
+ * 买房 卖房 租房 房屋出租用户统一
  * Created by Dade on 2017/3/12.
  */
 @Document
@@ -25,9 +25,15 @@ public class Purchaser extends BasicModelObject {
     private String imageHeaderUrl;                      // 头像
 
     // person center
-    private List<FocusHouse> focusHouseList;            // 关注列表
-    private List<HouseRecord> houseRecordList;          // 看房列表
-    private List<HouseSchedule> houseScheduleList;      // 看房行程
+    private List<PurchaserHouse> focusHouseList;            // 关注列表
+    private List<PurchaserHouse> houseRecordList;          // 看房列表
+    private List<PurchaserHouse> houseScheduleList;      // 看房行程
+
+    // house
+    private List<PurchaserHouse> rentHouseList;             // 租房列表
+    private List<PurchaserHouse> rentOutHouseList;          // 出租房屋列表
+    private List<PurchaserHouse> sellHouseList;             // 卖房列表
+    private List<PurchaserHouse> buyHouseList;              // 买房列表
 
     private Date createDate;
     private Date ModifyDate;
@@ -99,27 +105,27 @@ public class Purchaser extends BasicModelObject {
     }
 
 
-    public List<FocusHouse> getFocusHouseList() {
+    public List<PurchaserHouse> getFocusHouseList() {
         return focusHouseList;
     }
 
-    public void setFocusHouseList(List<FocusHouse> focusHouseList) {
+    public void setFocusHouseList(List<PurchaserHouse> focusHouseList) {
         this.focusHouseList = focusHouseList;
     }
 
-    public List<HouseRecord> getHouseRecordList() {
+    public List<PurchaserHouse> getHouseRecordList() {
         return houseRecordList;
     }
 
-    public void setHouseRecordList(List<HouseRecord> houseRecordList) {
+    public void setHouseRecordList(List<PurchaserHouse> houseRecordList) {
         this.houseRecordList = houseRecordList;
     }
 
-    public List<HouseSchedule> getHouseScheduleList() {
+    public List<PurchaserHouse> getHouseScheduleList() {
         return houseScheduleList;
     }
 
-    public void setHouseScheduleList(List<HouseSchedule> houseScheduleList) {
+    public void setHouseScheduleList(List<PurchaserHouse> houseScheduleList) {
         this.houseScheduleList = houseScheduleList;
     }
 
@@ -147,6 +153,38 @@ public class Purchaser extends BasicModelObject {
         this.deleted = deleted;
     }
 
+    public List<PurchaserHouse> getRentHouseList() {
+        return rentHouseList;
+    }
+
+    public void setRentHouseList(List<PurchaserHouse> rentHouseList) {
+        this.rentHouseList = rentHouseList;
+    }
+
+    public List<PurchaserHouse> getRentOutHouseList() {
+        return rentOutHouseList;
+    }
+
+    public void setRentOutHouseList(List<PurchaserHouse> rentOutHouseList) {
+        this.rentOutHouseList = rentOutHouseList;
+    }
+
+    public List<PurchaserHouse> getSellHouseList() {
+        return sellHouseList;
+    }
+
+    public void setSellHouseList(List<PurchaserHouse> sellHouseList) {
+        this.sellHouseList = sellHouseList;
+    }
+
+    public List<PurchaserHouse> getBuyHouseList() {
+        return buyHouseList;
+    }
+
+    public void setBuyHouseList(List<PurchaserHouse> buyHouseList) {
+        this.buyHouseList = buyHouseList;
+    }
+
     @Override
     public String toString() {
         return "Purchaser{" +
@@ -160,6 +198,13 @@ public class Purchaser extends BasicModelObject {
                 ", focusHouseList=" + focusHouseList +
                 ", houseRecordList=" + houseRecordList +
                 ", houseScheduleList=" + houseScheduleList +
+                ", rentHouseList=" + rentHouseList +
+                ", rentOutHouseList=" + rentOutHouseList +
+                ", sellHouseList=" + sellHouseList +
+                ", buyHouseList=" + buyHouseList +
+                ", createDate=" + createDate +
+                ", ModifyDate=" + ModifyDate +
+                ", deleted=" + deleted +
                 '}';
     }
 }

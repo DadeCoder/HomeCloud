@@ -13,15 +13,15 @@ public class House extends BasicModelObject {
 
     private String id;
 
-    private Integer area;                           // 面积
-    private Integer floor;                          // 楼层
-    private String address;                         // 地址
-    private String houseType;                       // 户型
-    private String community;                       // 小区
-    private String district;                        // 区域
+    private Integer area;                            // 面积
+    private Integer floor;                           // 楼层
+    private String address;                          // 地址
+    private String houseType;                        // 户型
+    private String community;                        // 小区
+    private String district;                         // 区域
 
-    private Integer sellprice;                      // 出售价格
-    private Integer rentprice;                      // 出租价格
+    private Integer sellPrice;                      // 出售价格
+    private Integer rentPrice;                      // 出租价格
 
     private Integer onlineType;                     // 出租还是出售[0 出租 | 1 出售]
     private String ownerId;                         // 房屋所有人ID
@@ -90,20 +90,20 @@ public class House extends BasicModelObject {
         this.district = district;
     }
 
-    public Integer getSellprice() {
-        return sellprice;
+    public Integer getSellPrice() {
+        return sellPrice;
     }
 
-    public void setSellprice(Integer sellprice) {
-        this.sellprice = sellprice;
+    public void setSellPrice(Integer sellPrice) {
+        this.sellPrice = sellPrice;
     }
 
-    public Integer getRentprice() {
-        return rentprice;
+    public Integer getRentPrice() {
+        return rentPrice;
     }
 
-    public void setRentprice(Integer rentprice) {
-        this.rentprice = rentprice;
+    public void setRentPrice(Integer rentPrice) {
+        this.rentPrice = rentPrice;
     }
 
     public Integer getOnlineType() {
@@ -177,8 +177,8 @@ public class House extends BasicModelObject {
                 ", houseType='" + houseType + '\'' +
                 ", community='" + community + '\'' +
                 ", district='" + district + '\'' +
-                ", sellprice=" + sellprice +
-                ", rentprice=" + rentprice +
+                ", sellPrice=" + sellPrice +
+                ", rentPrice=" + rentPrice +
                 ", onlineType=" + onlineType +
                 ", ownerId='" + ownerId + '\'' +
                 ", purchaserId='" + purchaserId + '\'' +

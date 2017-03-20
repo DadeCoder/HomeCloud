@@ -48,6 +48,10 @@ public class PurchaserDao extends BasicMongoDao<Purchaser> {
         purchaser.setFocusHouseList(new ArrayList<>());
         purchaser.setHouseRecordList(new ArrayList<>());
         purchaser.setHouseScheduleList(new ArrayList<>());
+        purchaser.setBuyHouseList(new ArrayList<>());
+        purchaser.setSellHouseList(new ArrayList<>());
+        purchaser.setRentHouseList(new ArrayList<>());
+        purchaser.setRentOutHouseList(new ArrayList<>());
         purchaser.setImageHeaderUrl("default.jpg");
         purchaser.setRole("USER");
 
