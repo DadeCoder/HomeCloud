@@ -27,21 +27,24 @@ public class HouseController {
         return dto;
     }
 
-//    @RequestMapping("/sellOut")
-//    public HouseSellOutResDto sellOut(@RequestBody HouseSellOutInpDto dto){
-//        LogUtil.info(dto.toString());
-//        HouseSellOutResDto res = new HouseSellOutResDto();
-//        return res;
-//    }
-
     @RequestMapping("/sellOut")
-    public HouseSellOutResDto sellOut(@RequestParam MultipartFile file,
-                                      @RequestBody HouseSellOutInpDto dto){
+    public HouseRentOutResDto sellOut(@RequestBody HouseRentOutInpDto dto,
+                                      Principal principal){
+
         LogUtil.info(dto.toString());
-        HouseSellOutResDto res = new HouseSellOutResDto();
+        HouseRentOutResDto res = houseServices.sellOut(dto, principal.getName());
 
         return res;
     }
+
+//    @RequestMapping("/sellOut")
+//    public HouseSellOutResDto sellOut(@RequestParam MultipartFile file,
+//                                      @RequestBody HouseSellOutInpDto dto){
+//        LogUtil.info(dto.toString());
+//        HouseSellOutResDto res = new HouseSellOutResDto();
+//
+//        return res;
+//    }
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public String upLoad(@RequestParam("file") MultipartFile file){

@@ -179,6 +179,8 @@ public class Purchaser extends BasicModelObject {
     }
 
     public List<PurchaserHouse> getSellHouseList() {
+        if (sellHouseList == null)
+            sellHouseList = new ArrayList<>();
         return sellHouseList;
     }
 

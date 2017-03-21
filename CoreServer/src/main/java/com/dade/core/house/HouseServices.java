@@ -74,6 +74,24 @@ public class HouseServices {
         return res;
     }
 
+    public HouseRentOutResDto sellOut(HouseRentOutInpDto dto, String phone){
+        House inHouse = HouseDtoFactory.getHouse(dto);
+
+        inHouse.setOwnerId(phone);
+        inHouse.setOnlineType(House.ONLINE_SELL);
+
+        House dbHouse = houseDao.atomicCreate(inHouse);
+
+        // 更新到purchaser
+        purchaserService.updateHouseCreateSell(phone, dbHouse.getId());
+
+        HouseRentOutResDto res = HouseDtoFactory.getHouseRentOut(dbHouse);
+
+        res.setInfo(dbHouse.getId());
+
+        return res;
+    }
+
     public String savePic(MultipartFile file) {
 
         DateFormat df = new SimpleDateFormat("yyyyMMddHHmmssSSS");

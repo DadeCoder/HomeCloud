@@ -42,6 +42,11 @@ public class PurchaserService {
         return purchaser;
     }
 
+    /**
+     * 更新出租房屋列表
+     * @param phone
+     * @param houseId
+     */
     public void updateHouseCreate(String phone, String houseId){
         Purchaser purchaser = getByPhone(phone);
 
@@ -52,6 +57,25 @@ public class PurchaserService {
         rentOutHouseList.add(purchaserHouse);
 
         purchaser.setRentOutHouseList(rentOutHouseList);
+
+        purchaserDao.atomicUpdate(purchaser);
+    }
+
+    /**
+     * 更新卖房列表
+     * @param phone
+     * @param houseId
+     */
+    public void updateHouseCreateSell(String phone, String houseId){
+        Purchaser purchaser = getByPhone(phone);
+
+        List<PurchaserHouse> sellHouseList = purchaser.getSellHouseList();
+        PurchaserHouse purchaserHouse = new PurchaserHouse();
+        purchaserHouse.setHouseId(houseId);
+        purchaserHouse.setTime(new Date());
+        sellHouseList.add(purchaserHouse);
+
+        purchaser.setSellHouseList(sellHouseList);
 
         purchaserDao.atomicUpdate(purchaser);
     }
