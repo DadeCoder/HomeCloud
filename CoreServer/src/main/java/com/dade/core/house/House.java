@@ -3,7 +3,9 @@ package com.dade.core.house;
 import com.dade.core.basic.BasicModelObject;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Dade on 2017/3/12.
@@ -33,10 +35,64 @@ public class House extends BasicModelObject {
     private Date sellDate;                          // 卖出时间
     private Date purchaseDate;                      // 租出时间
 
+    private String picUrl;
+    private Integer rentWay;                        // 租赁方式[默认整租]
+
+    private List<String> agentList;
+
+    private String analyze;
+    private String communityInfo;
 
     public static final Integer ONLINE_RENT = 0;        // 出租，见onlineType字段
     public static final Integer ONLINE_SELL = 1;        // 出售，见onlineType字段
 
+    public static final Integer RENT_WAY_DEFAULT = 0;        // 整租，见rentWay字段
+    public static final String RENT_WAY_DEFAULT_ZH = "整租";        // 整租，见rentWay字段
+
+
+    public String getAnalyze() {
+        return analyze;
+    }
+
+    public void setAnalyze(String analyze) {
+        this.analyze = analyze;
+    }
+
+    public String getCommunityInfo() {
+        return communityInfo;
+    }
+
+    public void setCommunityInfo(String communityInfo) {
+        this.communityInfo = communityInfo;
+    }
+
+    public Integer getRentWay() {
+        return rentWay;
+    }
+
+    public void setRentWay(Integer rentWay) {
+        this.rentWay = rentWay;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
+    public List<String> getAgentList() {
+
+        if (agentList == null)
+            agentList = new ArrayList<String>();
+
+        return agentList;
+    }
+
+    public void setAgentList(List<String> agentList) {
+        this.agentList = agentList;
+    }
 
     public void setId(String id) {
         this.id = id;

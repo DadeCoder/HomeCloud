@@ -1,20 +1,12 @@
 package com.dade.core.house;
 
-import com.dade.common.utils.ImageUtil;
 import com.dade.common.utils.LogUtil;
 import com.dade.core.house.dto.*;
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.io.*;
 import java.security.Principal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Random;
 
 /**
  * Created by Dade on 2017/3/20.
@@ -28,8 +20,10 @@ public class HouseController {
     HouseServices houseServices;
 
     @RequestMapping("/get")
-    public HouseDto get(@RequestParam String houseId){
+    public HouseDto get(@RequestParam String houseId,
+                        @RequestParam String picUrl){
         HouseDto dto = houseServices.getById(houseId);
+        houseServices.savePicUrl(houseId, picUrl);
         return dto;
     }
 
@@ -67,17 +61,8 @@ public class HouseController {
     public HouseRentOutResDto rentOut(@RequestBody HouseRentOutInpDto dto,
                                       Principal principal){
 
-//        MultipartFile file = request.getFile("file");
-//        MultipartFile file = request.getFileMap().get("file");
-
-
-
-//        HouseRentOutInpDto dto = (HouseRentOutInpDto)request.getAttribute("dto");
-
         LogUtil.info(dto.toString());
         HouseRentOutResDto res = houseServices.rentOut(dto, principal.getName());
-
-
 
         return res;
     }

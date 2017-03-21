@@ -1,6 +1,9 @@
 package com.dade.core.house.dto;
 
+import com.dade.core.user.agent.Agent;
+
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Dade on 2017/3/20.
@@ -18,6 +21,45 @@ public class HouseDto {
 
     private String date;                            // 上线时间（需要手动复制）
     private String type;                            // 出租还是出售（需要手动复制）
+
+    private List<Agent> agentList;
+
+    private String rentWay;
+
+    private String analyze;
+    private String communityInfo;
+
+    public String getAnalyze() {
+        return analyze;
+    }
+
+    public void setAnalyze(String analyze) {
+        this.analyze = analyze;
+    }
+
+    public String getCommunityInfo() {
+        return communityInfo;
+    }
+
+    public void setCommunityInfo(String communityInfo) {
+        this.communityInfo = communityInfo;
+    }
+
+    public String getRentWay() {
+        return rentWay;
+    }
+
+    public void setRentWay(String rentWay) {
+        this.rentWay = rentWay;
+    }
+
+    public List<Agent> getAgentList() {
+        return agentList;
+    }
+
+    public void setAgentList(List<Agent> agentList) {
+        this.agentList = agentList;
+    }
 
     public String getDate() {
         return date;

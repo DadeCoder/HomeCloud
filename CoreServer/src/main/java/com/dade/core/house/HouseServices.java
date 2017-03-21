@@ -4,6 +4,8 @@ import com.dade.core.house.dto.HouseDto;
 import com.dade.core.house.dto.HouseDtoFactory;
 import com.dade.core.house.dto.HouseRentOutInpDto;
 import com.dade.core.house.dto.HouseRentOutResDto;
+import com.dade.core.user.agent.Agent;
+import com.dade.core.user.agent.AgentDao;
 import com.dade.core.user.purchaser.Purchaser;
 import com.dade.core.user.purchaser.PurchaserDao;
 import com.dade.core.user.purchaser.PurchaserService;
@@ -15,7 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -30,11 +34,28 @@ public class HouseServices {
     @Autowired
     PurchaserService purchaserService;
 
+    @Autowired
+    AgentDao agentDao;
+
     public HouseDto getById(String houseId){
         House house = houseDao.findById(houseId);
         HouseDto dto = HouseDtoFactory.getHouseDto(house);
 
+        List<Agent> agentList = new ArrayList<>();
+
+        for (int i=0;i<house.getAgentList().size();i++){
+            Agent agent = agentDao.findById(house.getAgentList().get(i));
+            agentList.add(agent);
+        }
+
+        dto.setRentWay(House.RENT_WAY_DEFAULT_ZH);
+
+        dto.setAgentList(agentList);
         return dto;
+    }
+
+    public void savePicUrl(String houseId ,String url){
+        houseDao.savePicUrl(houseId, url);
     }
 
     public HouseRentOutResDto rentOut(HouseRentOutInpDto dto, String phone){
