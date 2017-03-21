@@ -1,5 +1,7 @@
 package com.dade.core.house.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 /**
  * Created by Dade on 2017/3/20.
  */
