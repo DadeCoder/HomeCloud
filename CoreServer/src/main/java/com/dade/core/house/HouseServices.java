@@ -34,6 +34,14 @@ public class HouseServices {
     @Autowired
     AgentDao agentDao;
 
+    public HouseSearchDto getSearchRent(List<String> condition){
+        List<House> houseList = houseDao.getSearchRent(condition);
+        List<HouseDto> houseDtoList = HouseDtoFactory.getHouseDto(houseList);
+        HouseSearchDto dto = new HouseSearchDto();
+        dto.setRes(houseDtoList);
+        return dto;
+    }
+
     public HouseSearchDto getSearch(List<String> condition){
         List<House> houseList = houseDao.getSearch(condition);
         List<HouseDto> houseDtoList = HouseDtoFactory.getHouseDto(houseList);
@@ -58,6 +66,7 @@ public class HouseServices {
 
         List<Agent> agentList = new ArrayList<>();
 
+        // change agentid to agent
         for (int i=0;i<house.getAgentList().size();i++){
             Agent agent = agentDao.findById(house.getAgentList().get(i));
             agentList.add(agent);

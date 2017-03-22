@@ -10,6 +10,8 @@ import java.util.List;
  */
 public class HouseDto {
 
+    private String id;
+
     private Integer area;                            // 面积
     private Integer floor;                           // 楼层
     private String address;                          // 地址
@@ -32,6 +34,14 @@ public class HouseDto {
 
     private String analyze;
     private String communityInfo;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getPicUrl() {
         return picUrl;

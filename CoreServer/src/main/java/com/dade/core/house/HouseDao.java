@@ -29,6 +29,88 @@ public class HouseDao extends BasicMongoDao<House> {
     }
 
 
+    public List<House> getSearchRent(List<String> condition){
+        Criteria criteria = Criteria.where(House.FIELD_DELETED).ne(true).and(House.FIELD_ONLINE_TYPE).is(House.ONLINE_RENT);
+
+        if (!StringUtil.isEmpty(condition.get(0)) && !condition.get(0).equals("区域不限"))
+            criteria = criteria.and(House.FIELD_DISTRICT).is(condition.get(0));
+
+        if (!StringUtil.isEmpty(condition.get(1)) && !condition.get(1).equals("售价不限")){
+            switch (condition.get(1)){
+                case "500":
+                    criteria = criteria.and(House.FIELD_RENTPRICE).lte(500);
+                    break;
+                case "500-1000":
+                    criteria = criteria.and(House.FIELD_RENTPRICE).gt(500).lte(1000);
+                    break;
+                case "1000-2000":
+                    criteria = criteria.and(House.FIELD_RENTPRICE).gt(1000).lte(2000);
+                    break;
+                case "2000-5000":
+                    criteria = criteria.and(House.FIELD_RENTPRICE).gt(2000).lte(5000);
+                    break;
+                case "5000-7000":
+                    criteria = criteria.and(House.FIELD_RENTPRICE).gt(5000).lte(7000);
+                    break;
+                case "7000-10000":
+                    criteria = criteria.and(House.FIELD_RENTPRICE).gt(7000).lte(10000);
+                    break;
+                case "10000-20000":
+                    criteria = criteria.and(House.FIELD_RENTPRICE).gt(10000).lte(20000);
+                    break;
+                case "20000":
+                    criteria = criteria.and(House.FIELD_RENTPRICE).gt(20000);
+                    break;
+            }
+        }
+
+        if (!StringUtil.isEmpty(condition.get(2)) && !condition.get(2).equals("面积不限")){
+            switch (condition.get(2)){
+                case "40":
+                    criteria = criteria.and(House.FIELD_AREA).lte(40);
+                    break;
+                case "40-60":
+                    criteria = criteria.and(House.FIELD_AREA).gt(40).lte(60);
+                    break;
+                case "60-80":
+                    criteria = criteria.and(House.FIELD_AREA).gt(60).lte(80);
+                    break;
+                case "80-100":
+                    criteria = criteria.and(House.FIELD_AREA).gt(80).lte(100);
+                    break;
+                case "100-120":
+                    criteria = criteria.and(House.FIELD_AREA).gt(100).lte(120);
+                    break;
+                case "120-144":
+                    criteria = criteria.and(House.FIELD_AREA).gt(120).lte(144);
+                    break;
+                case "144":
+                    criteria = criteria.and(House.FIELD_AREA).gt(144);
+                    break;
+            }
+        }
+
+        if (!StringUtil.isEmpty(condition.get(3)) && !condition.get(3).equals("房型不限"))
+            criteria = criteria.and(House.FIELD_HOUSE_TYPE).is(condition.get(3));
+
+        if (!StringUtil.isEmpty(condition.get(4)) && !condition.get(4).equals("楼层不限")){
+            switch (condition.get(4)){
+                case "低楼层":
+                    criteria = criteria.and(House.FIELD_FLOOR).lte(5);
+                    break;
+                case "中楼层":
+                    criteria = criteria.and(House.FIELD_FLOOR).gt(5).lte(10);
+                    break;
+                case "高楼层":
+                    criteria = criteria.and(House.FIELD_FLOOR).gt(10);
+                    break;
+            }
+        }
+
+        return mongoOperations.find(Query.query(criteria), House.class);
+
+    }
+
     public List<House> getSearch(List<String> condition){
         Criteria criteria = Criteria.where(House.FIELD_DELETED).ne(true).and(House.FIELD_ONLINE_TYPE).is(House.ONLINE_SELL);
 

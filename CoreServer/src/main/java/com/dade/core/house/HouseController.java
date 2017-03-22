@@ -22,6 +22,12 @@ public class HouseController {
     @Autowired
     HouseServices houseServices;
 
+    @RequestMapping(value = "/getRentHouse")
+    public HouseDto getRentHouse(@RequestParam String houseId){
+        HouseDto dto = houseServices.getById(houseId);
+        return dto;
+    }
+
     @RequestMapping("/get")
     public HouseDto get(@RequestParam String houseId,
                         @RequestParam String picUrl){
@@ -74,19 +80,19 @@ public class HouseController {
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public  HouseSearchDto search(@RequestBody List<String> condition, Principal principal){
-
-//        condition.forEach(s -> System.out.println(s));
-
         HouseSearchDto dto =  houseServices.getSearch(condition);
-
-//        HouseSearchDto dto = houseServices.getAllHouse();
-
-
-
         LogUtil.info(dto.toString());
 
         return dto;
-
     }
+
+    @RequestMapping(value = "/search_rent", method = RequestMethod.POST)
+    public  HouseSearchDto searchRent(@RequestBody List<String> condition, Principal principal){
+        HouseSearchDto dto =  houseServices.getSearchRent(condition);
+        LogUtil.info(dto.toString());
+
+        return dto;
+    }
+
 
 }
