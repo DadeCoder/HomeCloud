@@ -59,6 +59,8 @@ public class House extends BasicModelObject {
     public static final String FIELD_HOUSE_TYPE = "houseType";
     public static final String FIELD_ONLINE_TYPE = "onlineType";
 
+    public static final String FIELD_ID = "id";
+
     public String getAnalyze() {
         return analyze;
     }

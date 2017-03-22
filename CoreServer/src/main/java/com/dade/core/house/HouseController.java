@@ -2,6 +2,8 @@ package com.dade.core.house;
 
 import com.dade.common.utils.LogUtil;
 import com.dade.core.house.dto.*;
+import com.dade.core.user.purchaser.PurchaserService;
+import com.netflix.discovery.converters.Auto;
 import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,33 @@ public class HouseController {
 
     @Autowired
     HouseServices houseServices;
+
+    @Autowired
+    PurchaserService purchaserService;
+
+    @RequestMapping("/rent")
+    public void rent(@RequestParam String houseId, Principal principal){
+        houseServices.rent(houseId, principal.getName());
+    }
+
+    @RequestMapping("/buy")
+    public void buy(@RequestParam String houseId, Principal principal){
+        houseServices.buy(houseId, principal.getName());
+    }
+
+    @RequestMapping("/isFocus")
+    public Boolean isFocus(@RequestParam String houseId, Principal principal){
+        Boolean res = purchaserService.isFocus(houseId, principal.getName());
+        return res;
+    }
+
+    @RequestMapping("/focus")
+    public void focus(@RequestParam String houseId, Principal principal){
+        purchaserService.focus(houseId, principal.getName());
+
+        LogUtil.info("principal: " + principal.getName());
+
+    }
 
     @RequestMapping(value = "/getRentHouse")
     public HouseDto getRentHouse(@RequestParam String houseId){

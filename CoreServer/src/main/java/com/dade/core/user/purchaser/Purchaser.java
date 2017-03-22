@@ -107,6 +107,10 @@ public class Purchaser extends BasicModelObject {
 
 
     public List<PurchaserHouse> getFocusHouseList() {
+
+        if (focusHouseList == null)
+            focusHouseList = new ArrayList<>();
+
         return focusHouseList;
     }
 
@@ -189,6 +193,9 @@ public class Purchaser extends BasicModelObject {
     }
 
     public List<PurchaserHouse> getBuyHouseList() {
+        if (buyHouseList == null)
+            buyHouseList = new ArrayList<>();
+
         return buyHouseList;
     }
 

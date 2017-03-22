@@ -1,5 +1,6 @@
 package com.dade.core.user.purchaser;
 
+import com.dade.common.utils.LogUtil;
 import com.dade.core.basic.BasicMongoDao;
 import com.sun.deploy.net.proxy.pac.PACFunctions;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -16,6 +18,39 @@ import java.util.Queue;
  */
 @Component
 public class PurchaserDao extends BasicMongoDao<Purchaser> {
+
+    public boolean isFocus(String houseId, String phone){
+        Purchaser purchaser = getByPhoneNumber(phone);
+
+        List<PurchaserHouse> focusList = purchaser.getFocusHouseList();
+
+        for (PurchaserHouse purchaserHouse : focusList){
+            if (purchaserHouse.getHouseId().equals(houseId))
+                return true;
+        }
+
+//        if (focusList.contains(houseId) == true)
+//            return true;
+
+        return false;
+    }
+
+    public void focus(String houseId, String purchaserId){
+        Purchaser purchaser = getByPhoneNumber(purchaserId);
+
+        LogUtil.info(purchaser.toString());
+
+        List<PurchaserHouse> focusHouseList = purchaser.getFocusHouseList();
+        PurchaserHouse purchaserHouse = new PurchaserHouse();
+        purchaserHouse.setHouseId(houseId);
+        purchaserHouse.setTime(new Date());
+
+        focusHouseList.add(purchaserHouse);
+
+        purchaser.setFocusHouseList(focusHouseList);
+
+        mongoOperations.save(purchaser);
+    }
 
     public Purchaser addOne(Purchaser purchaser){
         mongoOperations.insert(purchaser);
@@ -65,6 +100,10 @@ public class PurchaserDao extends BasicMongoDao<Purchaser> {
         mongoOperations.insert(purchaser);
 
         return purchaser;
+    }
+
+    public void save(Purchaser purchaser){
+        mongoOperations.save(purchaser);
     }
 
 

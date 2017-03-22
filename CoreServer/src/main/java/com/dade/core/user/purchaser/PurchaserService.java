@@ -25,6 +25,47 @@ public class PurchaserService {
     @Autowired
     PurchaserDao purchaserDao;
 
+    public void updateRent(String houseId, String phone){
+        Purchaser purchaser = getByPhone(phone);
+
+        List<PurchaserHouse> rentList = purchaser.getRentHouseList();
+
+        PurchaserHouse purchaserHouse = new PurchaserHouse();
+        purchaserHouse.setHouseId(houseId);
+        purchaserHouse.setTime(new Date());
+
+        rentList.add(purchaserHouse);
+        purchaser.setRentHouseList(rentList);
+
+        purchaserDao.save(purchaser);
+    }
+
+    public void updateBuy(String houseId, String phone){
+        Purchaser purchaser = getByPhone(phone);
+
+        List<PurchaserHouse> purchaserHouses = purchaser.getBuyHouseList();
+        PurchaserHouse purchaserHouse = new PurchaserHouse();
+        purchaserHouse.setHouseId(houseId);
+        purchaserHouse.setTime(new Date());
+
+        purchaserHouses.add(purchaserHouse);
+
+        purchaser.setBuyHouseList(purchaserHouses);
+
+        purchaserDao.save(purchaser);
+
+//        purchaserDao.updateFirst(purchaser.getId(), purchaser);
+
+    }
+
+    public boolean isFocus(String houseId, String phone){
+        return purchaserDao.isFocus(houseId, phone);
+    }
+
+    public void focus(String houseId, String purchaserId){
+        purchaserDao.focus(houseId, purchaserId);
+    }
+
     public String getInfo(String phone){
         Purchaser purchaser = purchaserDao.getByPhoneNumber(phone);
         String info = purchaser.getName();

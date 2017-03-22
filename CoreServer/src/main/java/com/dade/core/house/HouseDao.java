@@ -8,6 +8,7 @@ import com.dade.core.user.purchaser.Purchaser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -28,6 +29,18 @@ public class HouseDao extends BasicMongoDao<House> {
         return House.class;
     }
 
+    public void save(House house){
+        mongoOperations.save(house);
+    }
+
+    public void delete(String houseId){
+        Criteria criteria = Criteria.where(House.FIELD_DELETED).ne(true)
+                .and(House.FIELD_ID).is(houseId);
+
+        Update update = Update.update(House.FIELD_DELETED, true);
+        mongoOperations.updateFirst(Query.query(criteria),update, House.class);
+
+    }
 
     public List<House> getSearchRent(List<String> condition){
         Criteria criteria = Criteria.where(House.FIELD_DELETED).ne(true).and(House.FIELD_ONLINE_TYPE).is(House.ONLINE_RENT);
