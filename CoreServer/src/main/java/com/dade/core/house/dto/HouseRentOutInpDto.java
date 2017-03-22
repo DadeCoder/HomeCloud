@@ -16,6 +16,16 @@ public class HouseRentOutInpDto {
 
     private Integer rentPrice;                      // 出售价格
 
+    private Integer sellPrice;
+
+    public Integer getSellPrice() {
+        return sellPrice;
+    }
+
+    public void setSellPrice(Integer sellPrice) {
+        this.sellPrice = sellPrice;
+    }
+
     public Integer getArea() {
         return area;
     }

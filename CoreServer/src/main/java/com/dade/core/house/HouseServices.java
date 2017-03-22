@@ -1,9 +1,6 @@
 package com.dade.core.house;
 
-import com.dade.core.house.dto.HouseDto;
-import com.dade.core.house.dto.HouseDtoFactory;
-import com.dade.core.house.dto.HouseRentOutInpDto;
-import com.dade.core.house.dto.HouseRentOutResDto;
+import com.dade.core.house.dto.*;
 import com.dade.core.user.agent.Agent;
 import com.dade.core.user.agent.AgentDao;
 import com.dade.core.user.purchaser.Purchaser;
@@ -36,6 +33,24 @@ public class HouseServices {
 
     @Autowired
     AgentDao agentDao;
+
+    public HouseSearchDto getSearch(List<String> condition){
+        List<House> houseList = houseDao.getSearch(condition);
+        List<HouseDto> houseDtoList = HouseDtoFactory.getHouseDto(houseList);
+        HouseSearchDto dto = new HouseSearchDto();
+        dto.setRes(houseDtoList);
+        return dto;
+    }
+
+    public HouseSearchDto getAllHouse(){
+        List<House> houseList  = houseDao.getAllHouse();
+
+        List<HouseDto> houseDtoList = HouseDtoFactory.getHouseDto(houseList);
+
+        HouseSearchDto dto = new HouseSearchDto();
+        dto.setRes(houseDtoList);
+        return dto;
+    }
 
     public HouseDto getById(String houseId){
         House house = houseDao.findById(houseId);

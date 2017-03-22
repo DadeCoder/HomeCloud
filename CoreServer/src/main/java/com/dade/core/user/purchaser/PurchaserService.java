@@ -83,7 +83,6 @@ public class PurchaserService {
 
     /**
      * user change their headimage
-     * TODO how to bind user id
      * @param src
      * @param data
      * @param file

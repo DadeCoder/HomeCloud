@@ -18,6 +18,10 @@ public class HouseDto {
     private String district;                         // 区域
 
     private Integer rentPrice;                      // 出售价格
+    private Integer sellPrice;                      // 出售价格
+
+    private String picUrl;
+
 
     private String date;                            // 上线时间（需要手动复制）
     private String type;                            // 出租还是出售（需要手动复制）
@@ -28,6 +32,22 @@ public class HouseDto {
 
     private String analyze;
     private String communityInfo;
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
+    public Integer getSellPrice() {
+        return sellPrice;
+    }
+
+    public void setSellPrice(Integer sellPrice) {
+        this.sellPrice = sellPrice;
+    }
 
     public String getAnalyze() {
         return analyze;

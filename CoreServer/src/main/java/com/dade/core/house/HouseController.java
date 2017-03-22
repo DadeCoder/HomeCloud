@@ -2,11 +2,14 @@ package com.dade.core.house;
 
 import com.dade.common.utils.LogUtil;
 import com.dade.core.house.dto.*;
+import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Dade on 2017/3/20.
@@ -58,8 +61,6 @@ public class HouseController {
 
     }
 
-
-
     @RequestMapping("/rentOut")
     public HouseRentOutResDto rentOut(@RequestBody HouseRentOutInpDto dto,
                                       Principal principal){
@@ -68,6 +69,24 @@ public class HouseController {
         HouseRentOutResDto res = houseServices.rentOut(dto, principal.getName());
 
         return res;
+    }
+
+
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    public  HouseSearchDto search(@RequestBody List<String> condition, Principal principal){
+
+//        condition.forEach(s -> System.out.println(s));
+
+        HouseSearchDto dto =  houseServices.getSearch(condition);
+
+//        HouseSearchDto dto = houseServices.getAllHouse();
+
+
+
+        LogUtil.info(dto.toString());
+
+        return dto;
+
     }
 
 }

@@ -43,12 +43,21 @@ public class House extends BasicModelObject {
     private String analyze;
     private String communityInfo;
 
+
+
     public static final Integer ONLINE_RENT = 0;        // 出租，见onlineType字段
     public static final Integer ONLINE_SELL = 1;        // 出售，见onlineType字段
 
     public static final Integer RENT_WAY_DEFAULT = 0;        // 整租，见rentWay字段
     public static final String RENT_WAY_DEFAULT_ZH = "整租";        // 整租，见rentWay字段
 
+    public static final String FIELD_DISTRICT = "district";
+    public static final String FIELD_AREA = "area";
+    public static final String FIELD_SELLPRICE = "sellPrice";
+    public static final String FIELD_RENTPRICE = "rentPrice";
+    public static final String FIELD_FLOOR = "floor";
+    public static final String FIELD_HOUSE_TYPE = "houseType";
+    public static final String FIELD_ONLINE_TYPE = "onlineType";
 
     public String getAnalyze() {
         return analyze;
