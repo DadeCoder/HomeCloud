@@ -1,13 +1,17 @@
 package com.dade.core.user.purchaser;
 
 import com.dade.common.utils.LogUtil;
+import com.dade.core.house.dto.HouseDto;
 import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,6 +24,33 @@ public class PurchaserController {
 
     @Autowired
     PurchaserService purchaserService;
+
+    @RequestMapping("/newPwd")
+    public boolean newPwd(@RequestParam String oldhash, @RequestParam String newhash, Principal principal){
+        return purchaserService.newPwd(oldhash, newhash, principal.getName());
+    }
+
+    @RequestMapping("/newNick")
+    public boolean newNick(@RequestParam String nick, Principal principal){
+        boolean res = purchaserService.newNick(nick, principal.getName());
+
+        return res;
+    }
+
+    @RequestMapping("/getNick")
+    public String getNick(Principal principal){
+        return purchaserService.getNick(principal.getName());
+    }
+
+    @RequestMapping("/getSell")
+    public List<HouseDto> getSell(Principal principal){
+        return purchaserService.getSell(principal.getName());
+    }
+
+    @RequestMapping("/getRent")
+    public List<HouseDto> getRent(Principal principal){
+        return purchaserService.getRent(principal.getName());
+    }
 
     @RequestMapping("/getInfo")
     String getInfo(Principal principal){

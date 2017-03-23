@@ -27,6 +27,21 @@ public class HouseController {
     @Autowired
     PurchaserService purchaserService;
 
+    @RequestMapping("/changePrice")
+    public void changePrice(@RequestParam String houseId, @RequestParam Integer price){
+        houseServices.changePrice(houseId, price);
+    }
+
+    @RequestMapping("/stopRent")
+    public void stopRent(@RequestParam String houseId, Principal principal){
+        houseServices.stopRent(houseId, principal.getName());
+    }
+
+    @RequestMapping("/stopSell")
+    public void stopSell(@RequestParam String houseId, Principal principal){
+        houseServices.stopSell(houseId, principal.getName());
+    }
+
     @RequestMapping("/rent")
     public void rent(@RequestParam String houseId, Principal principal){
         houseServices.rent(houseId, principal.getName());

@@ -34,6 +34,32 @@ public class HouseServices {
     @Autowired
     AgentDao agentDao;
 
+    public void changePrice(String houseId, Integer price){
+
+        House house = houseDao.findById(houseId);
+
+        if (house == null)
+            return;
+
+        house.setSellPrice(price);
+
+        houseDao.save(house);
+    }
+
+    public void stopRent(String houseId, String phone){
+        houseDao.delete(houseId);
+
+        purchaserService.updateStopRent(houseId, phone);
+
+    }
+
+    public void stopSell(String houseId, String phone){
+
+        houseDao.delete(houseId);
+
+        purchaserService.updateStopSell(houseId, phone);
+    }
+
     public void rent(String houseId, String phone){
         House house = houseDao.findById(houseId);
 

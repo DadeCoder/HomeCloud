@@ -1,6 +1,11 @@
 package com.dade.core.user.purchaser;
 
 import com.dade.common.utils.ImageUtil;
+import com.dade.core.general.RegisterDao;
+import com.dade.core.house.House;
+import com.dade.core.house.HouseDao;
+import com.dade.core.house.dto.HouseDto;
+import com.dade.core.house.dto.HouseDtoFactory;
 import org.apache.commons.io.FilenameUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +17,7 @@ import java.io.InputStream;
 import java.security.Principal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -24,6 +30,139 @@ public class PurchaserService {
 
     @Autowired
     PurchaserDao purchaserDao;
+
+    @Autowired
+    HouseDao houseDao;
+
+    @Autowired
+    RegisterDao registerDao;
+
+    public boolean newPwd(String oldHash, String newHash, String phone){
+        Purchaser purchaser = getByPhone(phone);
+
+        if (purchaser == null)
+            return false;
+
+        if (!purchaser.getPassword().equals(oldHash))
+            return false;
+
+        purchaser.setPassword(newHash);
+
+        purchaserDao.save(purchaser);
+
+        return true;
+    }
+
+    public boolean newNick(String nick, String phone){
+        Purchaser purchaser = getByPhone(phone);
+
+        if (purchaser == null)
+            return false;
+
+        if (registerDao.findByName(nick) != null)
+            return false;
+
+
+        purchaser.setName(nick);
+
+        purchaserDao.save(purchaser);
+
+        return true;
+    }
+
+    public String getNick(String phone){
+        Purchaser purchaser = getByPhone(phone);
+
+        if (purchaser == null)
+            return "";
+
+        return purchaser.getName();
+    }
+
+    public void updateStopRent(String houseId, String phone){
+        Purchaser purchaser = getByPhone(phone);
+
+        if (purchaser == null)
+            return;
+
+        List<PurchaserHouse> rentList = purchaser.getRentHouseList();
+
+        for (PurchaserHouse purchaserHouse : rentList){
+            if (purchaserHouse.getHouseId().equals(houseId)){
+                rentList.remove(purchaserHouse);
+                break;
+            }
+        }
+
+        purchaserDao.save(purchaser);
+    }
+
+    public void updateStopSell(String houseId, String phone){
+        Purchaser purchaser = getByPhone(phone);
+
+        if (purchaser == null)
+            return;
+
+        List<PurchaserHouse> sellHouseList = purchaser.getSellHouseList();
+
+        for (PurchaserHouse purchaserHouse : sellHouseList){
+            if (purchaserHouse.getHouseId().equals(houseId)){
+                sellHouseList.remove(purchaserHouse);
+                break;
+            }
+
+        }
+
+        purchaserDao.save(purchaser);
+    }
+
+
+
+    public List<HouseDto> getRent(String phone){
+
+        Purchaser purchaser = purchaserDao.getByPhoneNumber(phone);
+
+        if (purchaser==null)
+            return new ArrayList<>();
+
+        List<PurchaserHouse> rentHouseList = purchaser.getRentHouseList();
+
+        List<House> houseList = new ArrayList<>();
+
+        for (PurchaserHouse purchaserHouse : rentHouseList){
+            House house = houseDao.findById(purchaserHouse.getHouseId());
+            houseList.add(house);
+        }
+
+        List<HouseDto> res = HouseDtoFactory.getHouseDto(houseList);
+
+        return res;
+
+
+    }
+
+    public List<HouseDto> getSell(String phone){
+
+        Purchaser purchaser = purchaserDao.getByPhoneNumber(phone);
+
+        if (purchaser==null)
+            return new ArrayList<>();
+
+        List<PurchaserHouse> sellHouseList = purchaser.getSellHouseList();
+
+        List<House> houseList = new ArrayList<>();
+
+        for (PurchaserHouse purchaserHouse : sellHouseList){
+            House house = houseDao.findById(purchaserHouse.getHouseId());
+            houseList.add(house);
+        }
+
+        List<HouseDto> res = HouseDtoFactory.getHouseDto(houseList);
+
+        return res;
+
+
+    }
 
     public void updateRent(String houseId, String phone){
         Purchaser purchaser = getByPhone(phone);
