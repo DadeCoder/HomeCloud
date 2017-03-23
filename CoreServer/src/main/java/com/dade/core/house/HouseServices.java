@@ -1,10 +1,12 @@
 package com.dade.core.house;
 
+import com.dade.common.utils.DateUtil;
 import com.dade.core.house.dto.*;
 import com.dade.core.user.agent.Agent;
 import com.dade.core.user.agent.AgentDao;
 import com.dade.core.user.purchaser.Purchaser;
 import com.dade.core.user.purchaser.PurchaserDao;
+import com.dade.core.user.purchaser.PurchaserHouse;
 import com.dade.core.user.purchaser.PurchaserService;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,136 @@ public class HouseServices {
     @Autowired
     AgentDao agentDao;
 
+    public List<HouseDto> getBeforeOrder(String phone){
+
+        Purchaser purchaser = purchaserService.getByPhone(phone);
+
+        if (purchaser == null)
+            return new ArrayList<>();
+
+        List<House> houseList = new ArrayList<>();
+
+        List<PurchaserHouse> orderList = purchaser.getHouseScheduleList();
+
+        for (PurchaserHouse order : orderList){
+            if (order.getTime().before(new Date())){
+                House house = houseDao.findById(order.getHouseId());
+                houseList.add(house);
+            }
+        }
+
+        List<HouseDto> res = HouseDtoFactory.getHouseDtoPrice(houseList);
+
+        return res;
+    }
+
+    public List<HouseDto> getAfterOrder(String phone){
+
+        Purchaser purchaser = purchaserService.getByPhone(phone);
+
+        if (purchaser == null)
+            return new ArrayList<>();
+
+        List<House> houseList = new ArrayList<>();
+
+        List<PurchaserHouse> orderList = purchaser.getHouseScheduleList();
+
+        for (PurchaserHouse order : orderList){
+            if (order.getTime().after(new Date())){
+                House house = houseDao.findById(order.getHouseId());
+                houseList.add(house);
+            }
+        }
+
+        List<HouseDto> res = HouseDtoFactory.getHouseDtoPrice(houseList);
+
+        return res;
+    }
+
+    public boolean isOrder(String houseId, String phone){
+
+        House house = houseDao.findById(houseId);
+
+        if (house == null)
+            return false;
+
+        Purchaser purchaser = purchaserService.getByPhone(phone);
+
+        if (purchaser == null)
+            return false;
+
+        List<HousePurchaser> orderList = house.getOrderList();
+
+        for (HousePurchaser order : orderList){
+            if (order.getUserId().equals(purchaser.getId()) && order.getDate().after(new Date()))
+                return false;
+        }
+
+        return true;
+    }
+
+    public void _order(String houseId, Date time, String phone){
+        House house = houseDao.findById(houseId);
+
+        if (house == null)
+            return;
+
+        Purchaser purchaser = purchaserService.getByPhone(phone);
+
+        if (purchaser == null)
+            return;
+
+        List<HousePurchaser> orderList = house.getOrderList();
+        HousePurchaser housePurchaser = new HousePurchaser();
+
+        Date orderTime = time;
+
+        housePurchaser.setUserId(purchaser.getId());
+        housePurchaser.setDate(orderTime);
+
+        orderList.add(housePurchaser);
+        house.setOrderList(orderList);
+        houseDao.save(house);
+
+        purchaserService.updateOrder(houseId, phone, orderTime);
+    }
+
+    public void order(String houseId, String phone){
+
+        House house = houseDao.findById(houseId);
+
+        if (house == null)
+            return;
+
+        Purchaser purchaser = purchaserService.getByPhone(phone);
+
+        if (purchaser == null)
+            return;
+
+        List<HousePurchaser> orderList = house.getOrderList();
+        HousePurchaser housePurchaser = new HousePurchaser();
+
+        Date orderTime = null;
+
+        if (orderList.size() == 0){
+            housePurchaser.setUserId(purchaser.getId());
+            housePurchaser.setDate(DateUtil.getTomorrow());
+            orderTime = DateUtil.getTomorrow();
+        }else{
+            Date last = orderList.get(orderList.size()-1).getDate();
+            housePurchaser.setUserId(purchaser.getId());
+            housePurchaser.setDate(DateUtil.addOneDay(last));
+            orderTime = DateUtil.addOneDay(last);
+        }
+
+        orderList.add(housePurchaser);
+        house.setOrderList(orderList);
+        houseDao.save(house);
+
+        purchaserService.updateOrder(houseId, phone, orderTime);
+
+    }
+
     public void changePrice(String houseId, Integer price){
 
         House house = houseDao.findById(houseId);
@@ -41,7 +173,19 @@ public class HouseServices {
         if (house == null)
             return;
 
-        house.setSellPrice(price);
+        if (house.getOnlineType() == House.ONLINE_RENT){
+            if (house.getRentPrice() < price)
+                house.setSellPricePosition(House.SELL_PRICE_UP);
+            else
+                house.setSellPricePosition(House.SELL_PRICE_DOWN);
+            house.setRentPrice(price);
+        }else{
+            if (house.getSellPrice() < price)
+                house.setRentPricePosition(House.SELL_PRICE_UP);
+            else
+                house.setSellPricePosition(House.SELL_PRICE_DOWN);
+            house.setSellPrice(price);
+        }
 
         houseDao.save(house);
     }
@@ -151,6 +295,8 @@ public class HouseServices {
         inHouse.setOwnerId(phone);
         inHouse.setOnlineType(House.ONLINE_RENT);
 
+        inHouse.setRentPricePosition(House.RENT_PRICE_DEFAULT);
+
         House dbHouse = houseDao.atomicCreate(inHouse);
         purchaserService.updateHouseCreate(phone, dbHouse.getId());
 
@@ -166,6 +312,8 @@ public class HouseServices {
 
         inHouse.setOwnerId(phone);
         inHouse.setOnlineType(House.ONLINE_SELL);
+
+        inHouse.setSellPricePosition(House.SELL_PRICE_DEFAULT);
 
         House dbHouse = houseDao.atomicCreate(inHouse);
 

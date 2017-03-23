@@ -127,6 +127,10 @@ public class Purchaser extends BasicModelObject {
     }
 
     public List<PurchaserHouse> getHouseScheduleList() {
+
+        if (houseRecordList == null)
+            houseRecordList = new ArrayList<>();
+
         return houseScheduleList;
     }
 

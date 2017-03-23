@@ -39,11 +39,11 @@ public class HouseDtoFactory {
         return dto;
     }
 
-    public static List<HouseDto> getHouseDto(List<House> houseList){
+    public static List<HouseDto> getHouseDtoPrice(List<House> houseList) {
 
         List<HouseDto> houseDtoList = new ArrayList<>();
 
-        for (House house : houseList){
+        for (House house : houseList) {
             HouseDto houseDto = new HouseDto();
             BeanUtils.copyProperties(house, houseDto);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
@@ -52,11 +52,41 @@ public class HouseDtoFactory {
 
             houseDtoList.add(houseDto);
 
-            if (StringUtil.isEmpty(house.getPicUrl())){
+            if (house.getOnlineType() == House.ONLINE_RENT) {
+                houseDto.setPriceInfo("租金： " + house.getRentPrice());
+                houseDto.setTypeInfo("出租");
+            } else {
+                houseDto.setPriceInfo("价格： " + house.getSellPrice());
+                houseDto.setTypeInfo("出售");
+            }
+
+            if (StringUtil.isEmpty(house.getPicUrl())) {
                 houseDto.setPicUrl("http://127.0.0.1:8089/default.jpg");
             }
 
         }
+
+        return houseDtoList;
+    }
+
+        public static List<HouseDto> getHouseDto(List<House> houseList){
+
+            List<HouseDto> houseDtoList = new ArrayList<>();
+
+            for (House house : houseList){
+                HouseDto houseDto = new HouseDto();
+                BeanUtils.copyProperties(house, houseDto);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+
+                houseDto.setDate(sdf.format(house.getOnlineDate()));
+
+                houseDtoList.add(houseDto);
+
+                if (StringUtil.isEmpty(house.getPicUrl())){
+                    houseDto.setPicUrl("http://127.0.0.1:8089/default.jpg");
+                }
+
+            }
 
         return houseDtoList;
 

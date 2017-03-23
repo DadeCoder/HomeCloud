@@ -16,6 +16,12 @@ public class RegisterController {
     @Autowired
     RegisterService service;
 
+    @RequestMapping("/getInfo")
+    IndexInfoDto getInfo(){
+        IndexInfoDto info = service.getInfo();
+        return info;
+    }
+
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     Purchaser register(@RequestBody RegisterDto dto){
         LogUtil.info(dto.toString());

@@ -27,6 +27,41 @@ public class HouseController {
     @Autowired
     PurchaserService purchaserService;
 
+    @RequestMapping("/getBeforeOrder")
+    public List<HouseDto> getBeforeOrder(Principal principal){
+        return houseServices.getBeforeOrder(principal.getName());
+    }
+
+    @RequestMapping("/getAfterOrder")
+    public List<HouseDto> getAfterOrder(Principal principal){
+        return houseServices.getAfterOrder(principal.getName());
+    }
+
+    @RequestMapping("/isOrder")
+    public boolean isOrder(@RequestParam String houseId, Principal principal){
+        return houseServices.isOrder(houseId, principal.getName());
+    }
+
+    @RequestMapping("/order")
+    public void order(@RequestParam String houseId, Principal principal){
+        houseServices.order(houseId, principal.getName());
+    }
+
+    @RequestMapping("/getPriceAll")
+    public List<HouseDto> getPriceAll(Principal principal){
+        return purchaserService.getPriceAll(principal.getName());
+    }
+
+    @RequestMapping("/getPriceUp")
+    public List<HouseDto> getPriceUp(Principal principal){
+        return purchaserService.getPriceUp(principal.getName());
+    }
+
+    @RequestMapping("/getPriceDown")
+    public List<HouseDto> getPriceDown(Principal principal){
+        return purchaserService.getPriceDown(principal.getName());
+    }
+
     @RequestMapping("/changePrice")
     public void changePrice(@RequestParam String houseId, @RequestParam Integer price){
         houseServices.changePrice(houseId, price);
@@ -50,6 +85,18 @@ public class HouseController {
     @RequestMapping("/buy")
     public void buy(@RequestParam String houseId, Principal principal){
         houseServices.buy(houseId, principal.getName());
+    }
+
+    @RequestMapping("/getFocusRent")
+    public List<HouseDto> getFocusRent(Principal principal){
+        List<HouseDto> res = purchaserService.getFocusRent(principal.getName());
+        return res;
+    }
+
+    @RequestMapping("/getFocusSell")
+    public List<HouseDto> getFocusSell(Principal principal){
+        List<HouseDto> res = purchaserService.getFocusSell(principal.getName());
+        return res;
     }
 
     @RequestMapping("/isFocus")

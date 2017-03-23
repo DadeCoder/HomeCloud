@@ -6,6 +6,7 @@ import com.dade.core.user.agent.Agent;
 import com.dade.core.user.agent.AgentDao;
 import com.dade.core.user.purchaser.Purchaser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -237,6 +238,22 @@ public class HouseDao extends BasicMongoDao<House> {
 
     public List<House> getAllHouse(){
         return mongoOperations.findAll(House.class);
+    }
+
+    public Long getSellHousesCount(){
+        Criteria criteria = Criteria.where(House.FIELD_DELETED).ne(true).and(House.FIELD_ONLINE_TYPE).is(House.ONLINE_SELL);
+
+        return mongoOperations.count(Query.query(criteria), House.class);
+    }
+
+    public Long getRentHousesCount(){
+        Criteria criteria = Criteria.where(House.FIELD_DELETED).ne(true).and(House.FIELD_ONLINE_TYPE).is(House.ONLINE_RENT);
+
+        return mongoOperations.count(Query.query(criteria), House.class);
+    }
+
+    public Integer getAllHousesCount(){
+        return mongoOperations.findAll(House.class).size();
     }
 
 }

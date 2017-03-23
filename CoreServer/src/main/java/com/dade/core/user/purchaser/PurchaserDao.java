@@ -3,6 +3,7 @@ package com.dade.core.user.purchaser;
 import com.dade.common.utils.LogUtil;
 import com.dade.core.basic.BasicMongoDao;
 import com.sun.deploy.net.proxy.pac.PACFunctions;
+import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -18,6 +19,14 @@ import java.util.Queue;
  */
 @Component
 public class PurchaserDao extends BasicMongoDao<Purchaser> {
+
+    public Long getUsersCount(){
+
+        Criteria criteria = Criteria.where(Purchaser.FIELD_DELETED).ne(true);
+
+        return mongoOperations.count(Query.query(criteria), Purchaser.class);
+
+    }
 
     public boolean isFocus(String houseId, String phone){
         Purchaser purchaser = getByPhoneNumber(phone);

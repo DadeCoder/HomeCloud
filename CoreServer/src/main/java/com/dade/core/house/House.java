@@ -38,18 +38,30 @@ public class House extends BasicModelObject {
     private String picUrl;
     private Integer rentWay;                        // 租赁方式[默认整租]
 
+    private Integer sellPricePosition;                  // [0价格没变动|1升价|2降价]
+    private Integer rentPricePosition;                  // [0价格没变动|1升价|2降价]
+
     private List<String> agentList;
 
     private String analyze;
     private String communityInfo;
 
 
+    private List<HousePurchaser> orderList;                 // 预约名单
 
     public static final Integer ONLINE_RENT = 0;        // 出租，见onlineType字段
     public static final Integer ONLINE_SELL = 1;        // 出售，见onlineType字段
 
     public static final Integer RENT_WAY_DEFAULT = 0;        // 整租，见rentWay字段
     public static final String RENT_WAY_DEFAULT_ZH = "整租";        // 整租，见rentWay字段
+
+    public static final Integer SELL_PRICE_DEFAULT = 0;        // 价格不变，见sellPricePosition字段
+    public static final Integer SELL_PRICE_UP = 1;        // 升价，见sellPricePosition字段
+    public static final Integer SELL_PRICE_DOWN = 2;        // 降价，见sellPricePosition字段
+
+    public static final Integer RENT_PRICE_DEFAULT = 0;        // 价格不变，见rentPricePosition字段
+    public static final Integer RENT_PRICE_UP = 1;        // 升价，见rentPricePosition字段
+    public static final Integer RENT_PRICE_DOWN = 2;        // 降价，见rentPricePosition字段
 
     public static final String FIELD_DISTRICT = "district";
     public static final String FIELD_AREA = "area";
@@ -60,6 +72,34 @@ public class House extends BasicModelObject {
     public static final String FIELD_ONLINE_TYPE = "onlineType";
 
     public static final String FIELD_ID = "id";
+
+    public List<HousePurchaser> getOrderList() {
+
+        if (orderList == null)
+            orderList = new ArrayList<>();
+
+        return orderList;
+    }
+
+    public void setOrderList(List<HousePurchaser> orderList) {
+        this.orderList = orderList;
+    }
+
+    public Integer getRentPricePosition() {
+        return rentPricePosition;
+    }
+
+    public void setRentPricePosition(Integer rentPricePosition) {
+        this.rentPricePosition = rentPricePosition;
+    }
+
+    public Integer getSellPricePosition() {
+        return sellPricePosition;
+    }
+
+    public void setSellPricePosition(Integer sellPricePosition) {
+        this.sellPricePosition = sellPricePosition;
+    }
 
     public String getAnalyze() {
         return analyze;

@@ -1,7 +1,9 @@
 package com.dade.core.general;
 
+import com.dade.core.house.HouseDao;
 import com.dade.core.user.purchaser.Purchaser;
 import com.dade.core.user.purchaser.PurchaserDao;
+import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -19,6 +21,29 @@ public class RegisterService {
 
     @Autowired
     RegisterDao registerDao;
+
+    @Autowired
+    HouseDao houseDao;
+
+    public IndexInfoDto getInfo(){
+
+        IndexInfoDto dto = new IndexInfoDto();
+
+        Long users = purchaserDao.getUsersCount();
+
+        Long sellHouses =houseDao.getSellHousesCount();
+
+        Long rentHouses = houseDao.getRentHousesCount();
+
+        Integer doneCases = houseDao.getAllHousesCount();
+
+        dto.setDoneCases(doneCases);
+        dto.setRentHouses(rentHouses);
+        dto.setSellHouses(sellHouses);
+        dto.setUsers(users);
+
+        return dto;
+    }
 
     public Purchaser register(RegisterDto registerDto){
         Purchaser purchaser = new Purchaser();

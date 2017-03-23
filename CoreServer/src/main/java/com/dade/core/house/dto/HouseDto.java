@@ -2,7 +2,6 @@ package com.dade.core.house.dto;
 
 import com.dade.core.user.agent.Agent;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,6 +33,43 @@ public class HouseDto {
 
     private String analyze;
     private String communityInfo;
+
+    private boolean sellShow;
+    private boolean rentShow;
+    private String typeInfo;
+    private String priceInfo;
+
+    public String getPriceInfo() {
+        return priceInfo;
+    }
+
+    public void setPriceInfo(String priceInfo) {
+        this.priceInfo = priceInfo;
+    }
+
+    public boolean isSellShow() {
+        return sellShow;
+    }
+
+    public void setSellShow(boolean sellShow) {
+        this.sellShow = sellShow;
+    }
+
+    public boolean isRentShow() {
+        return rentShow;
+    }
+
+    public void setRentShow(boolean rentShow) {
+        this.rentShow = rentShow;
+    }
+
+    public String getTypeInfo() {
+        return typeInfo;
+    }
+
+    public void setTypeInfo(String typeInfo) {
+        this.typeInfo = typeInfo;
+    }
 
     public String getId() {
         return id;

@@ -37,6 +37,76 @@ public class PurchaserService {
     @Autowired
     RegisterDao registerDao;
 
+    public void updateOrder(String houseId, String phone, Date time){
+        Purchaser purchaser = getByPhone(phone);
+
+        if (purchaser == null)
+            return;
+
+        List<PurchaserHouse> orderList = purchaser.getHouseScheduleList();
+
+        PurchaserHouse purchaserHouse = new PurchaserHouse();
+        purchaserHouse.setHouseId(houseId);
+        purchaserHouse.setTime(time);
+
+        orderList.add(purchaserHouse);
+
+        purchaser.setHouseScheduleList(orderList);
+
+        purchaserDao.save(purchaser);
+    }
+
+    public List<HouseDto> getPriceDown(String phone){
+        Purchaser purchaser = getByPhone(phone);
+
+        if (purchaser == null)
+            return new ArrayList<>();
+
+        List<PurchaserHouse> purchaserHouses = purchaser.getFocusHouseList();
+        List<House> houseList = new ArrayList<>();
+
+        for (PurchaserHouse purchaserHouse : purchaserHouses){
+            House house = houseDao.findById(purchaserHouse.getHouseId());
+            if (house.getSellPricePosition() == House.SELL_PRICE_DOWN || house.getRentPricePosition() == House.RENT_PRICE_DOWN)
+                houseList.add(house);
+        }
+
+        List<HouseDto> res = HouseDtoFactory.getHouseDtoPrice(houseList);
+
+
+        return res;
+    }
+
+    public List<HouseDto> getPriceAll(String phone){
+        List<HouseDto> up = getPriceUp(phone);
+        List<HouseDto> down = getPriceDown(phone);
+
+        up.addAll(down);
+
+        return up;
+    }
+
+    public List<HouseDto> getPriceUp(String phone){
+        Purchaser purchaser = getByPhone(phone);
+
+        if (purchaser == null)
+            return new ArrayList<>();
+
+        List<PurchaserHouse> purchaserHouses = purchaser.getFocusHouseList();
+        List<House> houseList = new ArrayList<>();
+
+        for (PurchaserHouse purchaserHouse : purchaserHouses){
+            House house = houseDao.findById(purchaserHouse.getHouseId());
+            if (house.getSellPricePosition() == House.SELL_PRICE_UP || house.getRentPricePosition() == House.RENT_PRICE_UP)
+                houseList.add(house);
+        }
+
+        List<HouseDto> res = HouseDtoFactory.getHouseDtoPrice(houseList);
+
+
+        return res;
+    }
+
     public boolean newPwd(String oldHash, String newHash, String phone){
         Purchaser purchaser = getByPhone(phone);
 
@@ -195,6 +265,46 @@ public class PurchaserService {
 
 //        purchaserDao.updateFirst(purchaser.getId(), purchaser);
 
+    }
+
+    public List<HouseDto> getFocusSell(String phone){
+        Purchaser purchaser = getByPhone(phone);
+
+        if (purchaser == null)
+            return new ArrayList<>();
+
+        List<PurchaserHouse> focusList = purchaser.getFocusHouseList();
+        List<House> houseList = new ArrayList<>();
+
+        for (PurchaserHouse purchaserHouse : focusList){
+            House house = houseDao.findById(purchaserHouse.getHouseId());
+            if (house.getOnlineType() == House.ONLINE_SELL)
+                houseList.add(house);
+        }
+
+        List<HouseDto> res = HouseDtoFactory.getHouseDto(houseList);
+
+        return res;
+    }
+
+    public List<HouseDto> getFocusRent(String phone){
+        Purchaser purchaser = getByPhone(phone);
+
+        if (purchaser == null)
+            return new ArrayList<>();
+
+        List<PurchaserHouse> focusList = purchaser.getFocusHouseList();
+        List<House> houseList = new ArrayList<>();
+
+        for (PurchaserHouse purchaserHouse : focusList){
+            House house = houseDao.findById(purchaserHouse.getHouseId());
+            if (house.getOnlineType() == House.ONLINE_RENT)
+                houseList.add(house);
+        }
+
+        List<HouseDto> res = HouseDtoFactory.getHouseDto(houseList);
+
+        return res;
     }
 
     public boolean isFocus(String houseId, String phone){
