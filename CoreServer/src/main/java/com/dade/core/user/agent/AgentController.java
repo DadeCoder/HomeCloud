@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.method.P;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.security.Principal;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/agent")
+@RolesAllowed("ROLE_AGENT")
 @CrossOrigin
 public class AgentController {
 

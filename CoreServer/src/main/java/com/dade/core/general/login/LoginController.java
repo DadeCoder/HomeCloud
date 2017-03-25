@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.security.RolesAllowed;
 import java.security.Principal;
 
 /**
@@ -19,6 +20,12 @@ public class LoginController {
 
     @Autowired
     PurchaserService purchaserService;
+
+    @RequestMapping("/agent_login")
+    @RolesAllowed("ROLE_AGENT")
+    String agentLogin(Principal principal){
+        return principal.getName();
+    }
 
     @RequestMapping("/login")
     String login(Principal principal){
