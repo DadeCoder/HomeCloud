@@ -25,6 +25,34 @@ public class RegisterService {
     @Autowired
     HouseDao houseDao;
 
+    public IndexInfoDto getInfoSpe(String phone){
+
+        IndexInfoDto dto = new IndexInfoDto();
+
+        Long users = purchaserDao.getUsersCount();
+
+        Long sellHouses =houseDao.getSellHousesCount();
+
+        Long rentHouses = houseDao.getRentHousesCount();
+
+        Integer doneCases = houseDao.getAllHousesCount();
+
+        Purchaser purchaser = purchaserDao.getByPhoneNumber(phone);
+
+        String name = "";
+
+        if (purchaser != null)
+            name = purchaser.getName();
+
+        dto.setDoneCases(doneCases);
+        dto.setRentHouses(rentHouses);
+        dto.setSellHouses(sellHouses);
+        dto.setUsers(users);
+        dto.setName(name);
+
+        return dto;
+    }
+
     public IndexInfoDto getInfo(){
 
         IndexInfoDto dto = new IndexInfoDto();

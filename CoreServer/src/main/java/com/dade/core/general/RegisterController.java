@@ -5,6 +5,8 @@ import com.dade.core.user.purchaser.Purchaser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 /**
  * Created by Dade on 2017/3/12.
  */
@@ -15,6 +17,12 @@ public class RegisterController {
 
     @Autowired
     RegisterService service;
+
+    @RequestMapping("/getInfoSpe")
+    IndexInfoDto getInfoSpe(Principal principal){
+        IndexInfoDto info = service.getInfoSpe(principal.getName());
+        return info;
+    }
 
     @RequestMapping("/getInfo")
     IndexInfoDto getInfo(){
