@@ -23,4 +23,14 @@ public class AgentDao extends BasicMongoDao<Agent> {
         return agentList;
     }
 
+    public Agent getByPhone(String phone){
+
+        Criteria criteria = Criteria.where(Agent.FIELE_PHONE).is(phone)
+                .and(Agent.FIELD_DELETED).ne(true);
+
+        return mongoOperations.findOne(Query.query(criteria), Agent.class);
+
+    }
+
+
 }

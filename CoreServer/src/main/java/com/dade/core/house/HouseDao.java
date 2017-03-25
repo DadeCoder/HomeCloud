@@ -30,6 +30,15 @@ public class HouseDao extends BasicMongoDao<House> {
         return House.class;
     }
 
+
+    public List<House> getRentAccess(){
+        Criteria criteria = Criteria.where(House.FIELD_ACCESS).is(House.ACCESS_DAFAULT)
+                .and(House.FIELD_DELETED).ne(true)
+                .and(House.FIELD_ONLINE_TYPE).is(House.ONLINE_RENT);
+
+        return mongoOperations.find(Query.query(criteria), House.class);
+    }
+
     public void save(House house){
         mongoOperations.save(house);
     }
@@ -44,7 +53,9 @@ public class HouseDao extends BasicMongoDao<House> {
     }
 
     public List<House> getSearchRent(List<String> condition){
-        Criteria criteria = Criteria.where(House.FIELD_DELETED).ne(true).and(House.FIELD_ONLINE_TYPE).is(House.ONLINE_RENT);
+        Criteria criteria = Criteria.where(House.FIELD_DELETED).ne(true)
+                .and(House.FIELD_ONLINE_TYPE).is(House.ONLINE_RENT)
+                .and(House.FIELD_ACCESS).is(House.ACCESS_PASS);
 
         if (!StringUtil.isEmpty(condition.get(0)) && !condition.get(0).equals("区域不限"))
             criteria = criteria.and(House.FIELD_DISTRICT).is(condition.get(0));
@@ -126,7 +137,9 @@ public class HouseDao extends BasicMongoDao<House> {
     }
 
     public List<House> getSearch(List<String> condition){
-        Criteria criteria = Criteria.where(House.FIELD_DELETED).ne(true).and(House.FIELD_ONLINE_TYPE).is(House.ONLINE_SELL);
+        Criteria criteria = Criteria.where(House.FIELD_DELETED).ne(true)
+                .and(House.FIELD_ONLINE_TYPE).is(House.ONLINE_SELL)
+                .and(House.FIELD_ACCESS).is(House.ACCESS_PASS);
 
         if (!StringUtil.isEmpty(condition.get(0)) && !condition.get(0).equals("区域不限"))
             criteria = criteria.and(House.FIELD_DISTRICT).is(condition.get(0));
@@ -211,17 +224,18 @@ public class HouseDao extends BasicMongoDao<House> {
         Date date = new Date();
         house.setOnlineDate(date);
         house.setRentWay(House.RENT_WAY_DEFAULT);            // 整租
+        house.setAccess(House.ACCESS_DAFAULT);
 
-        List<String> agentList = house.getAgentList();
-        List<Agent> allAgent = agentDao.getAllAgent();
+//        List<String> agentList = house.getAgentList();
+//        List<Agent> allAgent = agentDao.getAllAgent();
 
-        // TODO replace
-        Random random = new Random();
-        int rand = random.nextInt(allAgent.size());
-        agentList.add(allAgent.get(rand).getId());
+//        // TODO replace
+//        Random random = new Random();
+//        int rand = random.nextInt(allAgent.size());
+//        agentList.add(allAgent.get(rand).getId());
 
-        house.setAnalyze("便利店、银行、茶餐厅、健身房、停车场、物流服务、医院、游泳池。");
-        house.setCommunityInfo("兴隆超市、佳兴超市、广州市人民医院、中国工商银行广州支行。");
+//        house.setAnalyze("便利店、银行、茶餐厅、健身房、停车场、物流服务、医院、游泳池。");
+//        house.setCommunityInfo("兴隆超市、佳兴超市、广州市人民医院、中国工商银行广州支行。");
 
         mongoOperations.insert(house);
 

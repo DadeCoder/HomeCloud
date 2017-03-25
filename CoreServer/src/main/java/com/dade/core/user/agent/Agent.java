@@ -11,7 +11,18 @@ public class Agent  extends BasicModelObject {
     private String id;
 
     private String name;
+    private String password;
     private String phone;
+
+    public static final String FIELE_PHONE = "phone";
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getId() {
         return id;

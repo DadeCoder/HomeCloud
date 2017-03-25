@@ -46,6 +46,7 @@ public class House extends BasicModelObject {
     private String analyze;
     private String communityInfo;
 
+    private Integer access;
 
     private List<HousePurchaser> orderList;                 // 预约名单
 
@@ -63,6 +64,10 @@ public class House extends BasicModelObject {
     public static final Integer RENT_PRICE_UP = 1;        // 升价，见rentPricePosition字段
     public static final Integer RENT_PRICE_DOWN = 2;        // 降价，见rentPricePosition字段
 
+    public static final Integer ACCESS_DAFAULT = 0;        // 未审核，access
+    public static final Integer ACCESS_DENY = 1;        // 拒绝，access
+    public static final Integer ACCESS_PASS = 2;        // 通过，access
+
     public static final String FIELD_DISTRICT = "district";
     public static final String FIELD_AREA = "area";
     public static final String FIELD_SELLPRICE = "sellPrice";
@@ -70,8 +75,17 @@ public class House extends BasicModelObject {
     public static final String FIELD_FLOOR = "floor";
     public static final String FIELD_HOUSE_TYPE = "houseType";
     public static final String FIELD_ONLINE_TYPE = "onlineType";
+    public static final String FIELD_ACCESS = "access";
 
     public static final String FIELD_ID = "id";
+
+    public Integer getAccess() {
+        return access;
+    }
+
+    public void setAccess(Integer access) {
+        this.access = access;
+    }
 
     public List<HousePurchaser> getOrderList() {
 

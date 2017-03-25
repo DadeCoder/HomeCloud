@@ -91,6 +91,27 @@ public class PurchaserDao extends BasicMongoDao<Purchaser> {
         mongoOperations.save(purchaser);
     }
 
+    public Purchaser atomicCreateAgent(Purchaser purchaser){
+        Date date = new Date();
+        purchaser.setCreateDate(date);
+        purchaser.setModifyDate(date);
+        purchaser.setDeleted(false);
+        purchaser.setFocusHouseList(new ArrayList<>());
+        purchaser.setHouseRecordList(new ArrayList<>());
+        purchaser.setHouseScheduleList(new ArrayList<>());
+        purchaser.setBuyHouseList(new ArrayList<>());
+        purchaser.setSellHouseList(new ArrayList<>());
+        purchaser.setRentHouseList(new ArrayList<>());
+        purchaser.setRentOutHouseList(new ArrayList<>());
+        purchaser.setImageHeaderUrl("default.jpg");
+        purchaser.setRole("AGENT");
+
+        mongoOperations.insert(purchaser);
+
+        return purchaser;
+    }
+
+
     public Purchaser atomicCreate(Purchaser purchaser){
         Date date = new Date();
         purchaser.setCreateDate(date);
