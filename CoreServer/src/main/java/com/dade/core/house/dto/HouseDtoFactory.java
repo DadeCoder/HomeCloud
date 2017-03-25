@@ -36,6 +36,15 @@ public class HouseDtoFactory {
 
         dto.setDate(sdf.format(house.getOnlineDate()));
 
+        if (house.getAccess() == House.ACCESS_PASS)
+            dto.setStatus("通过审核");
+
+        if (house.getAccess() == House.ACCESS_DENY)
+            dto.setStatus("未通过审核");
+
+        if (house.getAccess() == House.ACCESS_DAFAULT)
+            dto.setStatus("未审核");
+
         return dto;
     }
 
@@ -64,6 +73,15 @@ public class HouseDtoFactory {
                 houseDto.setPicUrl("http://127.0.0.1:8089/default.jpg");
             }
 
+            if (house.getAccess() == House.ACCESS_PASS)
+                houseDto.setStatus("通过审核");
+
+            if (house.getAccess() == House.ACCESS_DENY)
+                houseDto.setStatus("未通过审核");
+
+            if (house.getAccess() == House.ACCESS_DAFAULT)
+                houseDto.setStatus("未审核");
+
         }
 
         return houseDtoList;
@@ -85,6 +103,15 @@ public class HouseDtoFactory {
                 if (StringUtil.isEmpty(house.getPicUrl())){
                     houseDto.setPicUrl("http://127.0.0.1:8089/default.jpg");
                 }
+
+                if (house.getAccess() == House.ACCESS_PASS)
+                    houseDto.setStatus("通过审核");
+
+                if (house.getAccess() == House.ACCESS_DENY)
+                    houseDto.setStatus("未通过审核");
+
+                if (house.getAccess() == House.ACCESS_DAFAULT)
+                    houseDto.setStatus("未审核");
 
             }
 

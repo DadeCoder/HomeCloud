@@ -20,6 +20,11 @@ public class AgentController {
     @Autowired
     AgentServices agentServices;
 
+    @RequestMapping("/getSellAccess")
+    List<HouseDto> getSellAccess(){
+        return agentServices.getSellAccess();
+    }
+
     @RequestMapping("/getRentAccess")
     List<HouseDto> getRentAccess(){
         return agentServices.getRentAccess();
@@ -27,12 +32,12 @@ public class AgentController {
 
     @RequestMapping(value = "/pass", method = RequestMethod.POST)
     void pass(@RequestBody AgentPassDto dto, Principal principal){
-
-//        LogUtil.info(dto.toString());
-//        LogUtil.info(principal.getName());
-
         agentServices.pass(dto, principal.getName());
+    }
 
+    @RequestMapping(value = "/deny", method = RequestMethod.POST)
+    void deny(@RequestBody AgentPassDto dto, Principal principal){
+        agentServices.deny(dto, principal.getName());
     }
 
 }

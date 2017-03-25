@@ -1,6 +1,7 @@
 package com.dade.core.user.purchaser;
 
 import com.dade.common.utils.ImageUtil;
+import com.dade.common.utils.LogUtil;
 import com.dade.core.general.RegisterDao;
 import com.dade.core.house.House;
 import com.dade.core.house.HouseDao;
@@ -187,15 +188,14 @@ public class PurchaserService {
     }
 
 
-
-    public List<HouseDto> getRent(String phone){
+    public List<HouseDto> getAllRent(String phone){
 
         Purchaser purchaser = purchaserDao.getByPhoneNumber(phone);
 
         if (purchaser==null)
             return new ArrayList<>();
 
-        List<PurchaserHouse> rentHouseList = purchaser.getRentHouseList();
+        List<PurchaserHouse> rentHouseList = purchaser.getRentOutHouseList();
 
         List<House> houseList = new ArrayList<>();
 
@@ -211,6 +211,50 @@ public class PurchaserService {
 
     }
 
+    public List<HouseDto> getRent(String phone){
+
+        Purchaser purchaser = purchaserDao.getByPhoneNumber(phone);
+
+        if (purchaser==null)
+            return new ArrayList<>();
+
+        List<PurchaserHouse> rentHouseList = purchaser.getRentOutHouseList();
+
+        List<House> houseList = new ArrayList<>();
+
+        for (PurchaserHouse purchaserHouse : rentHouseList){
+            House house = houseDao.findById(purchaserHouse.getHouseId());
+            if (house.getAccess() == House.ACCESS_PASS)
+                houseList.add(house);
+        }
+
+        List<HouseDto> res = HouseDtoFactory.getHouseDto(houseList);
+
+        return res;
+
+
+    }
+
+    public List<HouseDto> getAllSell(String phone){
+        Purchaser purchaser = purchaserDao.getByPhoneNumber(phone);
+
+        if (purchaser==null)
+            return new ArrayList<>();
+
+        List<PurchaserHouse> sellHouseList = purchaser.getSellHouseList();
+
+        List<House> houseList = new ArrayList<>();
+
+        for (PurchaserHouse purchaserHouse : sellHouseList){
+            House house = houseDao.findById(purchaserHouse.getHouseId());
+            houseList.add(house);
+        }
+
+        List<HouseDto> res = HouseDtoFactory.getHouseDto(houseList);
+
+        return res;
+    }
+
     public List<HouseDto> getSell(String phone){
 
         Purchaser purchaser = purchaserDao.getByPhoneNumber(phone);
@@ -224,7 +268,8 @@ public class PurchaserService {
 
         for (PurchaserHouse purchaserHouse : sellHouseList){
             House house = houseDao.findById(purchaserHouse.getHouseId());
-            houseList.add(house);
+            if (house.getAccess() == House.ACCESS_PASS)
+                houseList.add(house);
         }
 
         List<HouseDto> res = HouseDtoFactory.getHouseDto(houseList);

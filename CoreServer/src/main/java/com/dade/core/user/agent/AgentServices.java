@@ -21,6 +21,13 @@ public class AgentServices {
     @Autowired
     HouseDao houseDao;
 
+    public List<HouseDto> getSellAccess(){
+        List<House> houseList = houseDao.getSellAccess();
+        List<HouseDto> res = HouseDtoFactory.getHouseDto(houseList);
+
+        return res;
+    }
+
     public List<HouseDto> getRentAccess(){
         List<House> houseList = houseDao.getRentAccess();
         List<HouseDto> res = HouseDtoFactory.getHouseDto(houseList);
@@ -50,6 +57,26 @@ public class AgentServices {
 
         houseDao.save(house);
 
+    }
+
+    public void deny(AgentPassDto dto, String phone){
+
+        House house = houseDao.findById(dto.getHouseId());
+
+        if (house == null)
+            return;
+
+        Agent agent = agentDao.getByPhone(phone);
+
+        if (agent == null)
+            return;
+
+        house.setAccess(House.ACCESS_DENY);
+        house.setDenyInfo(dto.getDenyInfo());
+
+        house.setDenyAgentId(agent.getId());
+
+        houseDao.save(house);
     }
 
 }

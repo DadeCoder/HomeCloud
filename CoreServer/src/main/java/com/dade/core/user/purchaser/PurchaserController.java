@@ -1,6 +1,7 @@
 package com.dade.core.user.purchaser;
 
 import com.dade.common.utils.LogUtil;
+import com.dade.core.house.House;
 import com.dade.core.house.dto.HouseDto;
 import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +43,19 @@ public class PurchaserController {
         return purchaserService.getNick(principal.getName());
     }
 
+    @RequestMapping("/getAllSell")
+    public List<HouseDto> getAllSell(Principal principal){
+        return purchaserService.getAllSell(principal.getName());
+    }
+
     @RequestMapping("/getSell")
     public List<HouseDto> getSell(Principal principal){
         return purchaserService.getSell(principal.getName());
+    }
+
+    @RequestMapping("/getAllRent")
+    public List<HouseDto> getAllRent(Principal principal){
+        return purchaserService.getAllRent(principal.getName());
     }
 
     @RequestMapping("/getRent")

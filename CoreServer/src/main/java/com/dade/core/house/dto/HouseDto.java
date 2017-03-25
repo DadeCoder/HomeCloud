@@ -39,6 +39,26 @@ public class HouseDto {
     private String typeInfo;
     private String priceInfo;
 
+    private String status;
+
+    private String denyInfo;
+
+    public String getDenyInfo() {
+        return denyInfo;
+    }
+
+    public void setDenyInfo(String denyInfo) {
+        this.denyInfo = denyInfo;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String getPriceInfo() {
         return priceInfo;
     }

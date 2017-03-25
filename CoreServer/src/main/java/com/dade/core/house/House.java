@@ -46,7 +46,11 @@ public class House extends BasicModelObject {
     private String analyze;
     private String communityInfo;
 
+    private String denyInfo;
+
     private Integer access;
+
+    private String denyAgentId;
 
     private List<HousePurchaser> orderList;                 // 预约名单
 
@@ -78,6 +82,22 @@ public class House extends BasicModelObject {
     public static final String FIELD_ACCESS = "access";
 
     public static final String FIELD_ID = "id";
+
+    public String getDenyAgentId() {
+        return denyAgentId;
+    }
+
+    public void setDenyAgentId(String denyAgentId) {
+        this.denyAgentId = denyAgentId;
+    }
+
+    public String getDenyInfo() {
+        return denyInfo;
+    }
+
+    public void setDenyInfo(String denyInfo) {
+        this.denyInfo = denyInfo;
+    }
 
     public Integer getAccess() {
         return access;
