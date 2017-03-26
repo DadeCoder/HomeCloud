@@ -54,6 +54,8 @@ public class House extends BasicModelObject {
 
     private List<HousePurchaser> orderList;                 // 预约名单
 
+    private List<CheckRecord> recordList;
+
     public static final Integer ONLINE_RENT = 0;        // 出租，见onlineType字段
     public static final Integer ONLINE_SELL = 1;        // 出售，见onlineType字段
 
@@ -80,8 +82,23 @@ public class House extends BasicModelObject {
     public static final String FIELD_HOUSE_TYPE = "houseType";
     public static final String FIELD_ONLINE_TYPE = "onlineType";
     public static final String FIELD_ACCESS = "access";
+    public static final String FIELD_AGENT_LIST = "agentList";
+
 
     public static final String FIELD_ID = "id";
+
+
+    public List<CheckRecord> getRecordList() {
+
+        if (recordList == null)
+            recordList = new ArrayList<>();
+
+        return recordList;
+    }
+
+    public void setRecordList(List<CheckRecord> recordList) {
+        this.recordList = recordList;
+    }
 
     public String getDenyAgentId() {
         return denyAgentId;

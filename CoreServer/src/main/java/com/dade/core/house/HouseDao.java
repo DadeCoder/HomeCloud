@@ -262,6 +262,24 @@ public class HouseDao extends BasicMongoDao<House> {
         return mongoOperations.findAll(House.class);
     }
 
+    public List<House> getAllSellHouse(String phone){
+        Criteria criteria = Criteria.where(House.FIELD_ONLINE_TYPE).is(House.ONLINE_SELL)
+                .and(House.FIELD_DELETED).ne(true)
+                .and(House.FIELD_ACCESS).is(House.ACCESS_PASS)
+                .and(House.FIELD_AGENT_LIST).in(phone);
+
+        return find(Query.query(criteria));
+    }
+
+    public List<House> getAllRentHouse(String phone){
+        Criteria criteria = Criteria.where(House.FIELD_ONLINE_TYPE).is(House.ONLINE_RENT)
+                .and(House.FIELD_DELETED).ne(true)
+                .and(House.FIELD_ACCESS).is(House.ACCESS_PASS)
+                .and(House.FIELD_AGENT_LIST).in(phone);
+
+        return find(Query.query(criteria));
+    }
+
     public Long getSellHousesCount(){
         Criteria criteria = Criteria.where(House.FIELD_DELETED).ne(true).and(House.FIELD_ONLINE_TYPE).is(House.ONLINE_SELL);
 

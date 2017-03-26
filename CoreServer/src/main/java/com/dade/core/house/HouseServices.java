@@ -282,6 +282,22 @@ public class HouseServices {
         dto.setRentWay(House.RENT_WAY_DEFAULT_ZH);
 
         dto.setAgentList(agentList);
+
+        List<Record> records = new ArrayList<>();
+        List<CheckRecord> checkRecords = house.getRecordList();
+
+        for (CheckRecord record : checkRecords){
+            Record r = new Record();
+            r.setDate(record.getCheckDate());
+            Agent agent = agentDao.findById(record.getCheckId());
+            r.setName(agent.getName());
+            r.setPhone(agent.getPhone());
+
+            records.add(r);
+        }
+
+        dto.setRecords(records);
+
         return dto;
     }
 

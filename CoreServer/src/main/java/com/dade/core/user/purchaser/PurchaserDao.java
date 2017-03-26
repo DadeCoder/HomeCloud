@@ -20,6 +20,12 @@ import java.util.Queue;
 @Component
 public class PurchaserDao extends BasicMongoDao<Purchaser> {
 
+    public List<Purchaser> getAllUsers(){
+        Criteria criteria = Criteria.where(Purchaser.FIELD_DELETED).ne(true);
+
+        return find(Query.query(criteria));
+    }
+
     public Long getUsersCount(){
 
         Criteria criteria = Criteria.where(Purchaser.FIELD_DELETED).ne(true);

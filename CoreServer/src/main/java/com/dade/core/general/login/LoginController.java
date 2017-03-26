@@ -28,6 +28,7 @@ public class LoginController {
     }
 
     @RequestMapping("/login")
+    @RolesAllowed("ROLE_USER")
     String login(Principal principal){
         return principal.getName();
     }

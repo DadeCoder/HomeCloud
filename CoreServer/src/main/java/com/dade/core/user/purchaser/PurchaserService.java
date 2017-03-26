@@ -7,8 +7,10 @@ import com.dade.core.house.House;
 import com.dade.core.house.HouseDao;
 import com.dade.core.house.dto.HouseDto;
 import com.dade.core.house.dto.HouseDtoFactory;
+import com.dade.core.user.agent.UserDto;
 import org.apache.commons.io.FilenameUtils;
 import org.json.JSONObject;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,6 +39,28 @@ public class PurchaserService {
 
     @Autowired
     RegisterDao registerDao;
+
+    public List<UserDto> getAllUsers(){
+        List<Purchaser> users = purchaserDao.getAllUsers();
+        List<UserDto> res = new ArrayList<>();
+
+        for (Purchaser user : users){
+            UserDto dto = new UserDto();
+            BeanUtils.copyProperties(user, dto);
+            if (user.getBuyHouseList() != null)
+                dto.setBuyNo(user.getBuyHouseList().size());
+            if (user.getRentHouseList() != null)
+                dto.setRentNo(user.getRentHouseList().size());
+            if (user.getRentOutHouseList() != null)
+                dto.setRentOutNo(user.getRentOutHouseList().size());
+            if (user.getSellHouseList() != null)
+                dto.setSellNo(user.getSellHouseList().size());
+
+            res.add(dto);
+        }
+
+        return res;
+    }
 
     public void updateOrder(String houseId, String phone, Date time){
         Purchaser purchaser = getByPhone(phone);
