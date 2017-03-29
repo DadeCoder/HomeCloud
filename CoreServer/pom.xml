@@ -74,6 +74,29 @@
 			<artifactId>json</artifactId>
 			<version>20140107</version>
 		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.apache.httpcomponents</groupId>-->
+			<!--<artifactId>httpclient</artifactId>-->
+			<!--<version>4.3.6</version>-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>org.apache.httpcomponents</groupId>-->
+			<!--<artifactId>httpmime</artifactId>-->
+			<!--<version>4.3.6</version>-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>commons-httpclient</groupId>-->
+			<!--<artifactId>commons-httpclient</artifactId>-->
+			<!--<version>3.1</version>-->
+		<!--</dependency>-->
+
+		<!--&lt;!&ndash; https://mvnrepository.com/artifact/commons-net/commons-net &ndash;&gt;-->
+		<!--<dependency>-->
+			<!--<groupId>commons-net</groupId>-->
+			<!--<artifactId>commons-net</artifactId>-->
+			<!--<version>3.6</version>-->
+		<!--</dependency>-->
+
 
 
 	</dependencies>

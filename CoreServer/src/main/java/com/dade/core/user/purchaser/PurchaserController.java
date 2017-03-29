@@ -77,6 +77,9 @@ public class PurchaserController {
         return info;
     }
 
+
+
+
     /**
      * 用户更换头像
      * @param src
@@ -95,7 +98,7 @@ public class PurchaserController {
 
         LogUtil.info(principal.getName());
 
-        String imageHeadUrl = purchaserService.imageHead(src, data, file, principal.getName());
+        String imageHeadUrl = purchaserService.imageHead(data, file, principal.getName());
         if(type==null || !type.toLowerCase().startsWith("image/") || imageHeadUrl == null)
             return  new HashMap<String, Object>(){
                 {

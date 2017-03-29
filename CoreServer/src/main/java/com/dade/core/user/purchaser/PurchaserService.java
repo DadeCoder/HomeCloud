@@ -1,5 +1,6 @@
 package com.dade.core.user.purchaser;
 
+import com.dade.common.dto.ImageHeadDto;
 import com.dade.common.utils.ImageUtil;
 import com.dade.common.utils.LogUtil;
 import com.dade.core.general.RegisterDao;
@@ -8,15 +9,18 @@ import com.dade.core.house.HouseDao;
 import com.dade.core.house.dto.HouseDto;
 import com.dade.core.house.dto.HouseDtoFactory;
 import com.dade.core.user.agent.UserDto;
+import com.netflix.discovery.converters.Auto;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.InputStream;
+import java.io.*;
 import java.security.Principal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -39,6 +43,9 @@ public class PurchaserService {
 
     @Autowired
     RegisterDao registerDao;
+
+    @Autowired
+    RestTemplate restTemplate;
 
     public List<UserDto> getAllUsers(){
         List<Purchaser> users = purchaserDao.getAllUsers();
@@ -439,6 +446,42 @@ public class PurchaserService {
         purchaserDao.atomicUpdate(purchaser);
     }
 
+    public String imageHead(String data, MultipartFile file, String phone){
+        final String uri = "http://127.0.0.1:8092/api/purchaser/image_head/";
+        ImageHeadDto dto = new ImageHeadDto();
+
+        String ext = FilenameUtils.getExtension(file.getOriginalFilename());
+        File ffile = new File("E:/ImageServer/test/default." + ext);
+        dto.setData(data);
+        dto.setPhone(phone);
+
+        try {
+            InputStream input = file.getInputStream();  //这里得包括文件的路径与文件名
+            FileOutputStream output = new FileOutputStream(ffile);   //这里是复制的路径，但是也要加复制后的文件名
+
+            byte[] bt = new byte[1024];     //设置每次读多少
+            int c;
+            while((c=input.read(bt)) > 0){    //读出来
+                output.write(bt,0,c);         //写进去
+            }
+            //关闭输入、输出流
+            input.close();
+            output.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        dto.setFile(ffile);
+
+        String res = restTemplate.postForObject( uri, dto, String.class);
+        purchaserDao.saveImage(res, phone);
+        String imageHeadUrl = "http://127.0.0.1:8089/" + res;
+
+        return imageHeadUrl;
+    }
 
     /**
      * user change their headimage
@@ -447,6 +490,7 @@ public class PurchaserService {
      * @param file
      * @return
      */
+    @Deprecated
     public String imageHead(String src, String data, MultipartFile file, String phone){
 
         JSONObject joData = new JSONObject(data);

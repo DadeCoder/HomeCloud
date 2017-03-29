@@ -1,5 +1,6 @@
 package com.dade.core.house;
 
+import com.dade.common.dto.ImageHeadDto;
 import com.dade.common.utils.DateUtil;
 import com.dade.core.house.dto.*;
 import com.dade.core.user.agent.Agent;
@@ -8,9 +9,11 @@ import com.dade.core.user.purchaser.Purchaser;
 import com.dade.core.user.purchaser.PurchaserDao;
 import com.dade.core.user.purchaser.PurchaserHouse;
 import com.dade.core.user.purchaser.PurchaserService;
+import com.netflix.discovery.converters.Auto;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -35,6 +38,9 @@ public class HouseServices {
 
     @Autowired
     AgentDao agentDao;
+
+    @Autowired
+    RestTemplate restTemplate;
 
     public List<HouseDto> getBeforeOrder(String phone){
 
@@ -339,6 +345,39 @@ public class HouseServices {
         HouseRentOutResDto res = HouseDtoFactory.getHouseRentOut(dbHouse);
 
         res.setInfo(dbHouse.getId());
+
+        return res;
+    }
+
+    public String savePicServer(MultipartFile file) {
+
+        String ext = FilenameUtils.getExtension(file.getOriginalFilename());
+        File temp = new File("E:/ImageServer/test/default." + ext);
+
+        try {
+            InputStream input = file.getInputStream();
+            FileOutputStream output = new FileOutputStream(temp);
+
+            byte[] bt = new byte[1024];
+            int c;
+            while((c=input.read(bt)) > 0){
+                output.write(bt,0,c);
+            }
+
+            input.close();
+            output.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ImageHeadDto dto = new ImageHeadDto();
+        dto.setFile(temp);
+
+        final String uri = "http://127.0.0.1:8092/api/house/upload/";
+        String res = restTemplate.postForObject( uri, dto, String.class);
 
         return res;
     }
