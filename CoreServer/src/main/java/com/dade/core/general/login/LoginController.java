@@ -1,6 +1,7 @@
 package com.dade.core.general.login;
 
 import com.dade.common.utils.LogUtil;
+import com.dade.core.user.purchaser.Purchaser;
 import com.dade.core.user.purchaser.PurchaserDao;
 import com.dade.core.user.purchaser.PurchaserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,10 @@ public class LoginController {
 
     @RequestMapping("/login")
     @RolesAllowed("ROLE_USER")
-    String login(Principal principal){
-        return principal.getName();
+    Purchaser login(Principal principal){
+        Purchaser res = purchaserService.getByPhone(principal.getName());
+
+        return res;
     }
 
     @RequestMapping("/getInfo")
