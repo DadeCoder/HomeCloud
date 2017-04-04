@@ -237,7 +237,6 @@ public class HouseDao extends BasicMongoDao<House> {
 //        List<String> agentList = house.getAgentList();
 //        List<Agent> allAgent = agentDao.getAllAgent();
 
-//        // TODO replace
 //        Random random = new Random();
 //        int rand = random.nextInt(allAgent.size());
 //        agentList.add(allAgent.get(rand).getId());

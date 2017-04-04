@@ -379,6 +379,8 @@ public class HouseServices {
         final String uri = "http://127.0.0.1:8092/api/house/upload/";
         String res = restTemplate.postForObject( uri, dto, String.class);
 
+        // save to db res - filename - add http,need houseID
+
         return res;
     }
 

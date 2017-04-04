@@ -120,10 +120,9 @@ public class HouseController {
     }
 
     @RequestMapping("/get")
-    public HouseDto get(@RequestParam String houseId,
-                        @RequestParam String picUrl){
+    public HouseDto get(@RequestParam String houseId){
         HouseDto dto = houseServices.getById(houseId);
-        houseServices.savePicUrl(houseId, picUrl);
+        //houseServices.savePicUrl(houseId, picUrl);
         return dto;
     }
 
@@ -147,15 +146,19 @@ public class HouseController {
 //    }
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public String upLoad(@RequestParam("file") MultipartFile file){
+    public String upLoad(@RequestParam("file") MultipartFile file,
+                         @RequestParam("houseId") String houseId){
 
-        String path = houseServices.savePic(file);
+//        String path = houseServices.savePic(file);
+        String path = houseServices.savePicServer(file);
+        LogUtil.info(houseId);
+
         String imageHeadUrl = "http://127.0.0.1:8089/" + path;
-
         LogUtil.info(imageHeadUrl);
 
-        return imageHeadUrl;
+        houseServices.savePicUrl(houseId, imageHeadUrl);
 
+        return imageHeadUrl;
     }
 
     @RequestMapping("/rentOut")
