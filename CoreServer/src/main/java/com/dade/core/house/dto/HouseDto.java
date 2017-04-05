@@ -17,6 +17,7 @@ public class HouseDto {
     private String houseType;                        // 户型
     private String community;                        // 小区
     private String district;                         // 区域
+    private Integer onlineType;                     // 出租还是出售[0 出租 | 1 出售]
 
     private Integer rentPrice;                      // 出售价格
     private Integer sellPrice;                      // 出售价格
@@ -44,6 +45,14 @@ public class HouseDto {
     private String denyInfo;
 
     private List<Record> records;
+
+    public Integer getOnlineType() {
+        return onlineType;
+    }
+
+    public void setOnlineType(Integer onlineType) {
+        this.onlineType = onlineType;
+    }
 
     public List<Record> getRecords() {
         return records;
