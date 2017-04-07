@@ -48,6 +48,16 @@ public class PurchaserController {
         return purchaserService.getAllSell(principal.getName());
     }
 
+    @RequestMapping("/getRented")
+    public List<HouseDto> getRented(Principal principal){
+        return purchaserService.getRented(principal.getName());
+    }
+
+    @RequestMapping("/getBuy")
+    public List<HouseDto> getBuy(Principal principal){
+        return purchaserService.getBuy(principal.getName());
+    }
+
     @RequestMapping("/getSell")
     public List<HouseDto> getSell(Principal principal){
         return purchaserService.getSell(principal.getName());

@@ -30,6 +30,11 @@ public class HouseDao extends BasicMongoDao<House> {
         return House.class;
     }
 
+    public House getById(String id){
+        Criteria criteria = Criteria.where(House.FIELD_ID).is(id)
+                .and(House.FIELD_DELETED).ne(true);
+        return mongoOperations.findOne(Query.query(criteria), House.class);
+    }
 
     public List<House> getSellAccess(){
         Criteria criteria = Criteria.where(House.FIELD_ACCESS).is(House.ACCESS_DAFAULT)

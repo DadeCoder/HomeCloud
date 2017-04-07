@@ -266,6 +266,54 @@ public class PurchaserService {
 
     }
 
+    public List<HouseDto> getBuy(String phone){
+        Purchaser purchaser = purchaserDao.getByPhoneNumber(phone);
+
+        if (purchaser==null)
+            return new ArrayList<>();
+
+        List<PurchaserHouse> sellHouseList = purchaser.getBuyHouseList();
+
+        List<House> houseList = new ArrayList<>();
+
+        for (PurchaserHouse purchaserHouse : sellHouseList){
+            House house = houseDao.findById(purchaserHouse.getHouseId());
+            if (house != null)
+                houseList.add(house);
+        }
+
+        if (houseList.size()==0)
+            return new ArrayList<>();
+
+        List<HouseDto> res = HouseDtoFactory.getHouseDto(houseList);
+
+        return res;
+    }
+
+    public List<HouseDto> getRented(String phone){
+        Purchaser purchaser = purchaserDao.getByPhoneNumber(phone);
+
+        if (purchaser==null)
+            return new ArrayList<>();
+
+        List<PurchaserHouse> sellHouseList = purchaser.getRentHouseList();
+
+        List<House> houseList = new ArrayList<>();
+
+        for (PurchaserHouse purchaserHouse : sellHouseList){
+            House house = houseDao.findById(purchaserHouse.getHouseId());
+            if (house != null)
+                houseList.add(house);
+        }
+
+        if (houseList.size()==0)
+            return new ArrayList<>();
+
+        List<HouseDto> res = HouseDtoFactory.getHouseDto(houseList);
+
+        return res;
+    }
+
     public List<HouseDto> getAllSell(String phone){
         Purchaser purchaser = purchaserDao.getByPhoneNumber(phone);
 
@@ -277,9 +325,13 @@ public class PurchaserService {
         List<House> houseList = new ArrayList<>();
 
         for (PurchaserHouse purchaserHouse : sellHouseList){
-            House house = houseDao.findById(purchaserHouse.getHouseId());
-            houseList.add(house);
+            House house = houseDao.getById(purchaserHouse.getHouseId());
+            if (house != null)
+                houseList.add(house);
         }
+
+        if (houseList.size()==0)
+            return new ArrayList<>();
 
         List<HouseDto> res = HouseDtoFactory.getHouseDto(houseList);
 
@@ -304,6 +356,7 @@ public class PurchaserService {
         }
 
         List<HouseDto> res = HouseDtoFactory.getHouseDto(houseList);
+
 
         return res;
 
@@ -349,6 +402,7 @@ public class PurchaserService {
         if (purchaser == null)
             return new ArrayList<>();
 
+//        List<PurchaserHouse> focusList = purchaser.getBuyHouseList();
         List<PurchaserHouse> focusList = purchaser.getFocusHouseList();
         List<House> houseList = new ArrayList<>();
 
