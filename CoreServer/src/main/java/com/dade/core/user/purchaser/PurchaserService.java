@@ -254,7 +254,7 @@ public class PurchaserService {
         List<House> houseList = new ArrayList<>();
 
         for (PurchaserHouse purchaserHouse : rentHouseList){
-            House house = houseDao.findById(purchaserHouse.getHouseId());
+            House house = houseDao.getById(purchaserHouse.getHouseId());
             if (house.getAccess() == House.ACCESS_PASS)
                 houseList.add(house);
         }
@@ -350,8 +350,8 @@ public class PurchaserService {
         List<House> houseList = new ArrayList<>();
 
         for (PurchaserHouse purchaserHouse : sellHouseList){
-            House house = houseDao.findById(purchaserHouse.getHouseId());
-            if (house.getAccess() == House.ACCESS_PASS)
+            House house = houseDao.getById(purchaserHouse.getHouseId());
+            if (house != null && house.getAccess() == House.ACCESS_PASS)
                 houseList.add(house);
         }
 

@@ -7,7 +7,9 @@ import org.springframework.beans.BeanUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Dade on 2017/3/20.
@@ -58,6 +60,45 @@ public class HouseDtoFactory {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 
             houseDto.setDate(sdf.format(house.getOnlineDate()));
+
+            houseDtoList.add(houseDto);
+
+            if (house.getOnlineType() == House.ONLINE_RENT) {
+                houseDto.setPriceInfo("租金： " + house.getRentPrice());
+                houseDto.setTypeInfo("出租");
+            } else {
+                houseDto.setPriceInfo("价格： " + house.getSellPrice());
+                houseDto.setTypeInfo("出售");
+            }
+
+            if (StringUtil.isEmpty(house.getPicUrl())) {
+                houseDto.setPicUrl("http://127.0.0.1:8089/default.jpg");
+            }
+
+            if (house.getAccess() == House.ACCESS_PASS)
+                houseDto.setStatus("通过审核");
+
+            if (house.getAccess() == House.ACCESS_DENY)
+                houseDto.setStatus("未通过审核");
+
+            if (house.getAccess() == House.ACCESS_DAFAULT)
+                houseDto.setStatus("未审核");
+
+        }
+
+        return houseDtoList;
+    }
+
+    public static List<HouseDto> getHouseSechdule(Map<House, Date> map) {
+
+        List<HouseDto> houseDtoList = new ArrayList<>();
+
+        for (House house : map.keySet()){
+            HouseDto houseDto = new HouseDto();
+            BeanUtils.copyProperties(house, houseDto);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+
+            houseDto.setDate(sdf.format(map.get(house).getTime()));
 
             houseDtoList.add(houseDto);
 

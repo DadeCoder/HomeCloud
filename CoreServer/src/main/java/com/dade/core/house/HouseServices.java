@@ -2,6 +2,7 @@ package com.dade.core.house;
 
 import com.dade.common.dto.ImageHeadDto;
 import com.dade.common.utils.DateUtil;
+import com.dade.common.utils.LogUtil;
 import com.dade.core.house.dto.*;
 import com.dade.core.user.agent.Agent;
 import com.dade.core.user.agent.AgentDao;
@@ -19,10 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by Dade on 2017/3/20.
@@ -50,17 +48,19 @@ public class HouseServices {
             return new ArrayList<>();
 
         List<House> houseList = new ArrayList<>();
+        Map<House, Date> map = new HashMap<>();
 
         List<PurchaserHouse> orderList = purchaser.getHouseScheduleList();
 
         for (PurchaserHouse order : orderList){
             if (order.getTime().before(new Date())){
                 House house = houseDao.findById(order.getHouseId());
+                map.put(house, order.getTime());
                 houseList.add(house);
             }
         }
 
-        List<HouseDto> res = HouseDtoFactory.getHouseDtoPrice(houseList);
+        List<HouseDto> res = HouseDtoFactory.getHouseSechdule(map);
 
         return res;
     }
@@ -73,6 +73,7 @@ public class HouseServices {
             return new ArrayList<>();
 
         List<House> houseList = new ArrayList<>();
+        Map<House, Date> map = new HashMap<>();
 
         List<PurchaserHouse> orderList = purchaser.getHouseScheduleList();
 
@@ -80,10 +81,11 @@ public class HouseServices {
             if (order.getTime().after(new Date())){
                 House house = houseDao.findById(order.getHouseId());
                 houseList.add(house);
+                map.put(house, order.getTime());
             }
         }
 
-        List<HouseDto> res = HouseDtoFactory.getHouseDtoPrice(houseList);
+        List<HouseDto> res = HouseDtoFactory.getHouseSechdule(map);
 
         return res;
     }
@@ -157,6 +159,10 @@ public class HouseServices {
             housePurchaser.setUserId(purchaser.getId());
             housePurchaser.setDate(DateUtil.getTomorrow());
             orderTime = DateUtil.getTomorrow();
+
+            LogUtil.info(DateUtil.getTomorrow().toString());
+            LogUtil.info(orderTime.toString());
+
         }else{
             Date last = orderList.get(orderList.size()-1).getDate();
             housePurchaser.setUserId(purchaser.getId());
