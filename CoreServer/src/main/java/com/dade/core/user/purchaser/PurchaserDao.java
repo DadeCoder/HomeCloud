@@ -21,7 +21,8 @@ import java.util.Queue;
 public class PurchaserDao extends BasicMongoDao<Purchaser> {
 
     public List<Purchaser> getAllUsers(){
-        Criteria criteria = Criteria.where(Purchaser.FIELD_DELETED).ne(true);
+        Criteria criteria = Criteria.where(Purchaser.FIELD_DELETED).ne(true)
+                .and(Purchaser.FIELD_ROLE).ne("AGENT");
 
         return find(Query.query(criteria));
     }

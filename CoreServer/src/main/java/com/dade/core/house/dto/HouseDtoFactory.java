@@ -30,7 +30,7 @@ public class HouseDtoFactory {
         }
         else{
             dto.setType("出售");
-            dto.setRentPrice(house.getSellPrice());
+            //dto.setRentPrice(house.getSellPrice());
         }
 
 

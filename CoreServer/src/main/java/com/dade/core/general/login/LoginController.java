@@ -24,8 +24,10 @@ public class LoginController {
 
     @RequestMapping("/agent_login")
     @RolesAllowed("ROLE_AGENT")
-    String agentLogin(Principal principal){
-        return principal.getName();
+    Purchaser agentLogin(Principal principal){
+        Purchaser res = purchaserService.getByPhone(principal.getName());
+//        return principal.getName();
+        return res;
     }
 
     @RequestMapping("/login")

@@ -45,7 +45,7 @@ public class Purchaser extends BasicModelObject {
     public static final String FIELD_NAME = "name";
     public static final String FIELD_IMAGE_URL = "imageHeaderUrl";
     public static final String FIELD_ID = "id";
-
+    public static final String FIELD_ROLE = "role";
 
 
 
