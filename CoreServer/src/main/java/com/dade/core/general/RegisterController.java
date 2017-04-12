@@ -53,5 +53,20 @@ public class RegisterController {
         return dto;
     }
 
+    @RequestMapping(value = "/phone", method = RequestMethod.GET)
+    RegisterNameDto phone(@RequestParam String phone){
+        RegisterNameDto dto = new RegisterNameDto();
+        LogUtil.info(phone);
+        if( service.isPhoneLegal(phone) )
+            dto.setValid(true);
+        else
+            dto.setValid(false);
+
+//        dto.setValid(true);
+
+        return dto;
+    }
+
+
 
 }

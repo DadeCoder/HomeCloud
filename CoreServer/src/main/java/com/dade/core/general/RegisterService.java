@@ -87,4 +87,14 @@ public class RegisterService {
         return false;
     }
 
+    public Boolean isPhoneLegal(String phone){
+        Purchaser purchaser = purchaserDao.getByPhoneNumber(phone);
+        if (purchaser == null)
+            return true;
+        return false;
+    }
+
+
+
+
 }
