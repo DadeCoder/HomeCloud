@@ -64,10 +64,10 @@ public class HouseDtoFactory {
             houseDtoList.add(houseDto);
 
             if (house.getOnlineType() == House.ONLINE_RENT) {
-                houseDto.setPriceInfo("租金： " + house.getRentPrice());
+                houseDto.setPriceInfo(house.getRentPrice() + "元/月");
                 houseDto.setTypeInfo("出租");
             } else {
-                houseDto.setPriceInfo("价格： " + house.getSellPrice());
+                houseDto.setPriceInfo(house.getSellPrice() + "万元");
                 houseDto.setTypeInfo("出售");
             }
 
