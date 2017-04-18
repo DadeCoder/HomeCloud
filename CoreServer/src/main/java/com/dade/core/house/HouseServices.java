@@ -165,9 +165,16 @@ public class HouseServices {
 
         }else{
             Date last = orderList.get(orderList.size()-1).getDate();
-            housePurchaser.setUserId(purchaser.getId());
-            housePurchaser.setDate(DateUtil.addOneDay(last));
-            orderTime = DateUtil.addOneDay(last);
+            Date now = new Date();
+            if (last.after(now)){
+                housePurchaser.setUserId(purchaser.getId());
+                housePurchaser.setDate(DateUtil.addOneDay(last));
+                orderTime = DateUtil.addOneDay(last);
+            }else{
+                housePurchaser.setUserId(purchaser.getId());
+                housePurchaser.setDate(DateUtil.getTomorrow());
+                orderTime = DateUtil.getTomorrow();
+            }
         }
 
         orderList.add(housePurchaser);
@@ -187,13 +194,13 @@ public class HouseServices {
 
         if (house.getOnlineType() == House.ONLINE_RENT){
             if (house.getRentPrice() < price)
-                house.setSellPricePosition(House.SELL_PRICE_UP);
+                house.setRentPricePosition(House.SELL_PRICE_UP);
             else
-                house.setSellPricePosition(House.SELL_PRICE_DOWN);
+                house.setRentPricePosition(House.SELL_PRICE_DOWN);
             house.setRentPrice(price);
         }else{
             if (house.getSellPrice() < price)
-                house.setRentPricePosition(House.SELL_PRICE_UP);
+                house.setSellPricePosition(House.SELL_PRICE_UP);
             else
                 house.setSellPricePosition(House.SELL_PRICE_DOWN);
             house.setSellPrice(price);

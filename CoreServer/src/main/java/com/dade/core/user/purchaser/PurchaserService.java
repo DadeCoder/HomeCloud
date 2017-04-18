@@ -24,10 +24,7 @@ import java.io.*;
 import java.security.Principal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by Dade on 2017/3/19.
@@ -94,11 +91,25 @@ public class PurchaserService {
         if (purchaser == null)
             return new ArrayList<>();
 
-        List<PurchaserHouse> purchaserHouses = purchaser.getFocusHouseList();
+        List<PurchaserHouse> purchaserHouseList = purchaser.getFocusHouseList();
         List<House> houseList = new ArrayList<>();
+
+        HashSet<String> hs = new HashSet<String>();
+        purchaserHouseList.stream().forEach( ph -> hs.add(ph.getHouseId()));
+        List<PurchaserHouse> purchaserHouses = new ArrayList<>();
+        for (String id : hs){
+            for (PurchaserHouse ph : purchaserHouseList){
+                if (ph.getHouseId().equals(id)){
+                    purchaserHouses.add(ph);
+                    break;
+                }
+            }
+        }
 
         for (PurchaserHouse purchaserHouse : purchaserHouses){
             House house = houseDao.findById(purchaserHouse.getHouseId());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+            LogUtil.warn(sdf.format(purchaserHouse.getTime()));
             if (house.getSellPricePosition() == House.SELL_PRICE_DOWN || house.getRentPricePosition() == House.RENT_PRICE_DOWN)
                 houseList.add(house);
         }
@@ -124,8 +135,20 @@ public class PurchaserService {
         if (purchaser == null)
             return new ArrayList<>();
 
-        List<PurchaserHouse> purchaserHouses = purchaser.getFocusHouseList();
+        List<PurchaserHouse> purchaserHouseList = purchaser.getFocusHouseList();
         List<House> houseList = new ArrayList<>();
+
+        HashSet<String> hs = new HashSet<String>();
+        purchaserHouseList.stream().forEach( ph -> hs.add(ph.getHouseId()));
+        List<PurchaserHouse> purchaserHouses = new ArrayList<>();
+        for (String id : hs){
+            for (PurchaserHouse ph : purchaserHouseList){
+                if (ph.getHouseId().equals(id)){
+                    purchaserHouses.add(ph);
+                    break;
+                }
+            }
+        }
 
         for (PurchaserHouse purchaserHouse : purchaserHouses){
             House house = houseDao.findById(purchaserHouse.getHouseId());
