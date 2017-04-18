@@ -285,13 +285,15 @@ public class HouseDao extends BasicMongoDao<House> {
     }
 
     public Long getSellHousesCount(){
-        Criteria criteria = Criteria.where(House.FIELD_DELETED).ne(true).and(House.FIELD_ONLINE_TYPE).is(House.ONLINE_SELL);
+        Criteria criteria = Criteria.where(House.FIELD_DELETED).ne(true).and(House.FIELD_ONLINE_TYPE).is(House.ONLINE_SELL)
+                .and(House.FIELD_ACCESS).is(House.ACCESS_PASS);
 
         return mongoOperations.count(Query.query(criteria), House.class);
     }
 
     public Long getRentHousesCount(){
-        Criteria criteria = Criteria.where(House.FIELD_DELETED).ne(true).and(House.FIELD_ONLINE_TYPE).is(House.ONLINE_RENT);
+        Criteria criteria = Criteria.where(House.FIELD_DELETED).ne(true).and(House.FIELD_ONLINE_TYPE).is(House.ONLINE_RENT)
+                .and(House.FIELD_ACCESS).is(House.ACCESS_PASS);
 
         return mongoOperations.count(Query.query(criteria), House.class);
     }
