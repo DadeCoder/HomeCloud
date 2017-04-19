@@ -2,6 +2,8 @@ package com.dade.core.house;
 
 import com.dade.common.utils.LogUtil;
 import com.dade.core.house.dto.*;
+import com.dade.core.user.purchaser.Purchaser;
+import com.dade.core.user.purchaser.PurchaserHouse;
 import com.dade.core.user.purchaser.PurchaserService;
 import com.netflix.discovery.converters.Auto;
 import org.apache.commons.logging.Log;
@@ -183,7 +185,17 @@ public class HouseController {
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public  HouseSearchDto search(@RequestBody List<String> condition, Principal principal){
         HouseSearchDto dto =  houseServices.getSearch(condition);
+        Purchaser purchaser = purchaserService.getByPhone(principal.getName());
+        List<PurchaserHouse> sellHouseList = purchaser.getSellHouseList();
         LogUtil.info(dto.toString());
+        List<HouseDto> res = dto.getRes();
+        for (HouseDto hd : res){
+            for (PurchaserHouse ph : sellHouseList){
+                if (hd.getId().equals(ph.getHouseId())){
+                    hd.setSelf(true);
+                }
+            }
+        }
 
         return dto;
     }
@@ -191,7 +203,21 @@ public class HouseController {
     @RequestMapping(value = "/search_rent", method = RequestMethod.POST)
     public  HouseSearchDto searchRent(@RequestBody List<String> condition, Principal principal){
         HouseSearchDto dto =  houseServices.getSearchRent(condition);
+
+
+        Purchaser purchaser = purchaserService.getByPhone(principal.getName());
+        List<PurchaserHouse> rentOutHouseList = purchaser.getRentOutHouseList();
         LogUtil.info(dto.toString());
+        List<HouseDto> res = dto.getRes();
+        for (HouseDto hd : res){
+            for (PurchaserHouse ph : rentOutHouseList){
+                if (hd.getId().equals(ph.getHouseId())){
+                    hd.setSelf(true);
+                }
+            }
+        }
+
+//        LogUtil.info(dto.toString());
 
         return dto;
     }

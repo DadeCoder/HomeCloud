@@ -46,6 +46,16 @@ public class HouseDto {
 
     private List<Record> records;
 
+    private boolean self;
+
+    public boolean getSelf() {
+        return self;
+    }
+
+    public void setSelf(boolean self) {
+        this.self = self;
+    }
+
     public Integer getOnlineType() {
         return onlineType;
     }
