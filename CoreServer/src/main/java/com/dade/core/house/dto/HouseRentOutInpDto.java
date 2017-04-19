@@ -10,7 +10,7 @@ public class HouseRentOutInpDto {
     private Integer area;                            // 面积
     private Integer floor;                           // 楼层
     private String address;                          // 地址
-    private String houseType;                        // 户型
+    private Integer houseType;                        // 户型
     private String community;                        // 小区
     private String district;                         // 区域
 
@@ -50,11 +50,11 @@ public class HouseRentOutInpDto {
         this.address = address;
     }
 
-    public String getHouseType() {
+    public Integer getHouseType() {
         return houseType;
     }
 
-    public void setHouseType(String houseType) {
+    public void setHouseType(Integer houseType) {
         this.houseType = houseType;
     }
 

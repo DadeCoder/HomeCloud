@@ -113,6 +113,14 @@ public class HouseController {
 
     }
 
+    @RequestMapping("/cancel_focus")
+    public void cancelFocus(@RequestParam String houseId, Principal principal){
+        purchaserService.cancelFocus(houseId, principal.getName());
+
+        LogUtil.info("principal: " + principal.getName());
+
+    }
+
     @RequestMapping(value = "/getRentHouse")
     public HouseDto getRentHouse(@RequestParam String houseId){
         HouseDto dto = houseServices.getById(houseId);

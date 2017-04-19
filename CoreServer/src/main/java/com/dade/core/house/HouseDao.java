@@ -128,8 +128,29 @@ public class HouseDao extends BasicMongoDao<House> {
             }
         }
 
-        if (!StringUtil.isEmpty(condition.get(3)) && !condition.get(3).equals("房型不限"))
-            criteria = criteria.and(House.FIELD_HOUSE_TYPE).is(condition.get(3));
+        if (!StringUtil.isEmpty(condition.get(3)) && !condition.get(3).equals("房型不限")){
+            switch (condition.get(3)){
+                case "一室":
+                    criteria = criteria.and(House.FIELD_HOUSE_TYPE).is(1);
+                    break;
+                case "两室":
+                    criteria = criteria.and(House.FIELD_HOUSE_TYPE).is(2);
+                    break;
+                case "三室":
+                    criteria = criteria.and(House.FIELD_HOUSE_TYPE).is(3);
+                    break;
+                case "四室":
+                    criteria = criteria.and(House.FIELD_HOUSE_TYPE).is(4);
+                    break;
+                case "五室":
+                    criteria = criteria.and(House.FIELD_HOUSE_TYPE).is(5);
+                    break;
+                case "五室以上":
+                    criteria = criteria.and(House.FIELD_HOUSE_TYPE).gt(5);
+                    break;
+            }
+        }
+            //criteria = criteria.and(House.FIELD_HOUSE_TYPE).is(condition.get(3));
 
         if (!StringUtil.isEmpty(condition.get(4)) && !condition.get(4).equals("楼层不限")){
             switch (condition.get(4)){
@@ -212,8 +233,30 @@ public class HouseDao extends BasicMongoDao<House> {
             }
         }
 
-        if (!StringUtil.isEmpty(condition.get(3)) && !condition.get(3).equals("房型不限"))
-            criteria = criteria.and(House.FIELD_HOUSE_TYPE).is(condition.get(3));
+        if (!StringUtil.isEmpty(condition.get(3)) && !condition.get(3).equals("房型不限")){
+//            criteria = criteria.and(House.FIELD_HOUSE_TYPE).is(condition.get(3));
+            switch (condition.get(3)){
+                case "一室":
+                    criteria = criteria.and(House.FIELD_HOUSE_TYPE).is(1);
+                    break;
+                case "两室":
+                    criteria = criteria.and(House.FIELD_HOUSE_TYPE).is(2);
+                    break;
+                case "三室":
+                    criteria = criteria.and(House.FIELD_HOUSE_TYPE).is(3);
+                    break;
+                case "四室":
+                    criteria = criteria.and(House.FIELD_HOUSE_TYPE).is(4);
+                    break;
+                case "五室":
+                    criteria = criteria.and(House.FIELD_HOUSE_TYPE).is(5);
+                    break;
+                case "五室以上":
+                    criteria = criteria.and(House.FIELD_HOUSE_TYPE).gt(5);
+                    break;
+            }
+        }
+
 
         if (!StringUtil.isEmpty(condition.get(4)) && !condition.get(4).equals("楼层不限")){
             switch (condition.get(4)){

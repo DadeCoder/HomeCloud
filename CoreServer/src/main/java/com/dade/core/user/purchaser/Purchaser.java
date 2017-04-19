@@ -3,9 +3,7 @@ package com.dade.core.user.purchaser;
 import com.dade.core.basic.BasicModelObject;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * 用户模型
@@ -112,7 +110,19 @@ public class Purchaser extends BasicModelObject {
         if (focusHouseList == null)
             focusHouseList = new ArrayList<>();
 
-        return focusHouseList;
+        HashSet<String> hs = new HashSet<String>();
+        focusHouseList.stream().forEach( ph -> hs.add(ph.getHouseId()));
+        List<PurchaserHouse> purchaserHouses = new ArrayList<>();
+        for (String id : hs){
+            for (PurchaserHouse ph : focusHouseList){
+                if (ph.getHouseId().equals(id)){
+                    purchaserHouses.add(ph);
+                    break;
+                }
+            }
+        }
+
+        return purchaserHouses;
     }
 
     public void setFocusHouseList(List<PurchaserHouse> focusHouseList) {

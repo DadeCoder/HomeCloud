@@ -468,6 +468,10 @@ public class PurchaserService {
         purchaserDao.focus(houseId, purchaserId);
     }
 
+    public void cancelFocus(String houseId, String purchaserId){
+        purchaserDao.cancelFocus(houseId, purchaserId);
+    }
+
     public String getInfo(String phone){
         Purchaser purchaser = purchaserDao.getByPhoneNumber(phone);
         String info = purchaser.getName();

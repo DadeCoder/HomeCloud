@@ -9,10 +9,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Created by Dade on 2017/3/12.
@@ -67,6 +64,36 @@ public class PurchaserDao extends BasicMongoDao<Purchaser> {
 
         mongoOperations.save(purchaser);
     }
+
+    public void cancelFocus(String houseId, String purchaserId){
+        Purchaser purchaser = getByPhoneNumber(purchaserId);
+
+        LogUtil.info(purchaser.toString());
+
+        List<PurchaserHouse> focusHouseList = purchaser.getFocusHouseList();
+
+        if (focusHouseList == null)
+            return;
+
+        Iterator<PurchaserHouse> iter = focusHouseList.iterator();
+        while(iter.hasNext()){
+            PurchaserHouse ph = iter.next();
+            if(ph.getHouseId().equals(houseId)){
+                iter.remove();
+            }
+        }
+
+//        for (PurchaserHouse ph: focusHouseList){
+//            if (ph.getHouseId().equals(houseId))
+//                focusHouseList.remove(ph);
+//        }
+
+        purchaser.setFocusHouseList(focusHouseList);
+
+        mongoOperations.save(purchaser);
+    }
+
+
 
     public Purchaser addOne(Purchaser purchaser){
         mongoOperations.insert(purchaser);
