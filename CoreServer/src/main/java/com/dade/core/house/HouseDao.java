@@ -180,29 +180,29 @@ public class HouseDao extends BasicMongoDao<House> {
 
         if (!StringUtil.isEmpty(condition.get(1)) && !condition.get(1).equals("售价不限")){
             switch (condition.get(1)){
-                case "5000":
-                    criteria = criteria.and(House.FIELD_SELLPRICE).lte(5000);
+                case "20":
+                    criteria = criteria.and(House.FIELD_SELLPRICE).lte(20);
                     break;
-                case "5000-7000":
-                    criteria = criteria.and(House.FIELD_SELLPRICE).gt(5000).lte(7000);
+                case "20-50":
+                    criteria = criteria.and(House.FIELD_SELLPRICE).gt(20).lte(50);
                     break;
-                case "7000-10000":
-                    criteria = criteria.and(House.FIELD_SELLPRICE).gt(7000).lte(10000);
+                case "50-100":
+                    criteria = criteria.and(House.FIELD_SELLPRICE).gt(50).lte(100);
                     break;
-                case "10000-13000":
-                    criteria = criteria.and(House.FIELD_SELLPRICE).gt(10000).lte(13000);
+                case "100-150":
+                    criteria = criteria.and(House.FIELD_SELLPRICE).gt(100).lte(150);
                     break;
-                case "13000-15000":
-                    criteria = criteria.and(House.FIELD_SELLPRICE).gt(13000).lte(15000);
+                case "150-200":
+                    criteria = criteria.and(House.FIELD_SELLPRICE).gt(150).lte(200);
                     break;
-                case "15000-17000":
-                    criteria = criteria.and(House.FIELD_SELLPRICE).gt(15000).lte(17000);
+                case "200-250":
+                    criteria = criteria.and(House.FIELD_SELLPRICE).gt(200).lte(250);
                     break;
-                case "17000-20000":
-                    criteria = criteria.and(House.FIELD_SELLPRICE).gt(17000).lte(20000);
+                case "250-300":
+                    criteria = criteria.and(House.FIELD_SELLPRICE).gt(250).lte(300);
                     break;
-                case "20000":
-                    criteria = criteria.and(House.FIELD_SELLPRICE).gt(20000);
+                case "300":
+                    criteria = criteria.and(House.FIELD_SELLPRICE).gt(300);
                     break;
             }
         }
